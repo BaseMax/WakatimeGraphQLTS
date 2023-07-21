@@ -56,7 +56,7 @@ Build and run the project:
 ```
 npm run build
 npm run start
-``
+```
 
 **Access the webservice:**
 
@@ -103,6 +103,8 @@ The webservice will be accessible at `http://localhost:<PORT>/graphql`, where `<
 
 - `forgotPassword(email: String!)` - Request a password reset link to be sent to the provided email.
 - `resetPassword(resetToken: String!, newPassword: String!)` - Reset the password using the reset token received via email.
+
+And more queries, and mutations.
 
 ## Contributing
 
