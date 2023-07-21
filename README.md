@@ -106,6 +106,87 @@ The webservice will be accessible at `http://localhost:<PORT>/graphql`, where `<
 
 And more queries, and mutations.
 
+## GraphQL Models
+
+```graphql
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  password: String!  # Note: Password should not be returned by queries for security reasons.
+  avatar: String
+  createdAt: String!
+  updatedAt: String!
+  apiKeys: [APIKey!]
+  projects: [Project!]
+  codingActivity: [CodingActivity!]
+  notifications: [String!]
+  leaderboardRank: Int
+}
+
+type APIKey {
+  id: ID!
+  key: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Project {
+  id: ID!
+  name: String!
+  createdAt: String!
+  updatedAt: String!
+  contributors: [User!]
+  codingActivity: [CodingActivity!]
+}
+
+type CodingActivity {
+  id: ID!
+  user: User!
+  project: Project!
+  language: String!
+  file: String!
+  startTime: String!
+  endTime: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Query {
+  getUserProfile: User!
+  getUserCodingActivity(startDate: String!, endDate: String!): [CodingActivity!]
+  getProjectDetails(projectID: ID!): Project!
+  getProjects: [Project!]
+  getAPIKey: APIKey!
+  checkAPIKeyValidity(apiKey: String!): Boolean!
+  getEditorData(editorID: ID!): JSON!
+  getEditorDataByDate(editorID: ID!, date: String!): JSON!
+}
+
+type Mutation {
+  signUp(username: String!, email: String!, password: String!): User!
+  logIn(email: String!, password: String!): User!
+  logOut: Boolean!
+  updateProfile(username: String, email: String, avatar: String): User!
+  createAPIKey: APIKey!
+  deleteAPIKey(apiKeyID: ID!): Boolean!
+  trackCodingActivity(projectID: ID!, language: String!, file: String!, startTime: String!, endTime: String!): CodingActivity!
+  generateReport(startDate: String!, endDate: String!): [CodingActivity!]
+  setNotificationPreferences(notifications: [String!]!): User!
+  setIntegrationSettings(editor: String!, apiKey: String!): Boolean!
+  joinLeaderboard: Boolean!
+  leaveLeaderboard: Boolean!
+  submitFeedback(subject: String!, message: String!): Boolean!
+  deleteAccount(password: String!): Boolean!
+  forgotPassword(email: String!): Boolean!
+  resetPassword(resetToken: String!, newPassword: String!): Boolean!
+  saveEditorData(editorID: ID!, data: JSON!): Boolean!
+  trackEditorActivity(editorID: ID!): Boolean!
+  stopEditorActivity(editorID: ID!): Boolean!
+  updateEditorActivity(editorID: ID!, data: JSON!): Boolean!
+}
+```
+
 ## Contributing
 
 We welcome contributions to improve and enhance this Wakatime clone. To contribute, follow these steps:
