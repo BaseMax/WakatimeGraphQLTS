@@ -5,7 +5,7 @@ This project is a Wakatime clone developed as a GraphQL-based webservice using T
 
 ## Features
 
-- **User Authentication: Users can sign up, log in, and manage their accounts. Authentication is required to access certain features and user-specific data.
+- **User Authentication**: Users can sign up, log in, and manage their accounts. Authentication is required to access certain features and user-specific data.
 - **Editor Plugin Integration**: The webservice will support integrating with various code editors, allowing users to track their coding activity automatically.
 - **Time Tracking**: Users' coding activity, including time spent on projects, files, and languages, will be recorded and available for analysis.
 - **Dashboard**: Users will have access to a personalized dashboard displaying their coding statistics, such as total coding time, most used programming languages, and productivity trends.
@@ -61,6 +61,48 @@ npm run start
 **Access the webservice:**
 
 The webservice will be accessible at `http://localhost:<PORT>/graphql`, where `<PORT>` is the port specified in your `.env` file or the default port.
+
+## GraphQL
+
+**Queries:**
+
+- `getUserProfile` - Get the details of the authenticated user's profile.
+- `getUserCodingActivity(startDate: String!, endDate: String!)` - Get the coding activity of the authenticated user for a specific time period.
+- `getProjectDetails(projectID: ID!)` - Get details of a specific project.
+- `getProjects` - Get a list of all projects for the authenticated user.
+- `getAPIKey` - Get the API key of the authenticated user.
+- `checkAPIKeyValidity(apiKey: String!)` - Check the validity of an API key.
+- `getEditorData(editorID: ID!)` - Get data from a specific code editor.
+- `getEditorDataByDate(editorID: ID!, date: String!)` - Get data from a specific code editor for a particular date.
+
+**Mutations:**
+
+- `signUp(username: String!, email: String!, password: String!)` - Register a new user.
+- `logIn(email: String!, password: String!)` - Log in an existing user.
+- `logOut` - Log out the authenticated user.
+- `updateProfile(username: String, email: String, avatar: String)` - Update the user's profile details.
+- `createAPIKey` - Generate a new API key for the authenticated user.
+- `deleteAPIKey(apiKeyID: ID!)` - Delete an API key for the authenticated user.
+- `trackCodingActivity(projectID: ID!, language: String!, file: String!, startTime: String!, endTime: String!)` - Track coding activity for the authenticated user.
+- `generateReport(startDate: String!, endDate: String!)` - Generate a coding activity report for a specific time period.
+- `setNotificationPreferences(notifications: [String]!)` - Set notification preferences for the authenticated user.
+- `setIntegrationSettings(editor: String!, apiKey: String!)` - Set integration settings for a code editor.
+- `joinLeaderboard` - Join the coding activity leaderboard.
+- `leaveLeaderboard` - Leave the coding activity leaderboard.
+- `submitFeedback(subject: String!, message: String!)` - Submit feedback to the administrators.
+- `deleteAccount(password: String!)` - Delete the authenticated user's account (requires password confirmation).
+
+### Editor-related Mutations:
+
+- `saveEditorData(editorID: ID!, data: JSON!)` - Save editor data in the database for a specific code editor.
+- `trackEditorActivity(editorID: ID!)` - Start tracking editor activity for a specific code editor.
+- `stopEditorActivity(editorID: ID!)` - Stop tracking editor activity for a specific code editor.
+- `updateEditorActivity(editorID: ID!, data: JSON!)` - Update editor activity data for a specific code editor.
+
+### Additional Auth-related Queries:
+
+- `forgotPassword(email: String!)` - Request a password reset link to be sent to the provided email.
+- `resetPassword(resetToken: String!, newPassword: String!)` - Reset the password using the reset token received via email.
 
 ## Contributing
 
