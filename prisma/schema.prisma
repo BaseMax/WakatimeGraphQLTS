@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int                 @id @default(autoincrement())
+  username          String
+  userAtId          String              @unique
+  password          String
+  bio               String
+  NotificationToken NotificationToken[]
+  Notification      Notification[]
+}
+
+model Project {
+  id        Int        @id @default(autoincrement())
+  name      String
+  totalTime String
+  languages Language[]
+  editors   Editor[]
+}
+
+model Language {
+  id        Int      @id @default(autoincrement())
+  name      String
+  Project   Project? @relation(fields: [projectId], references: [id])
+  projectId Int?
+}
+
+model Editor {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  Project   Project? @relation(fields: [projectId], references: [id])
+  projectId Int?
+}
+
+model NotificationToken {
+  id                 Int            @id @default(autoincrement())
+  user               User           @relation(fields: [userId], references: [id])
+  userId             Int
+  device_type        String
+  notification_token String         @unique()
+  notifications      Notification[]
+  status             String         @default("ACTIVE")
+}
+
+model Notification {
+  id                  Int               @id @default(autoincrement())
+  title               String
+  body                String
+  notificationToken   NotificationToken @relation(fields: [notificationTokenId], references: [id])
+  notificationTokenId Int
+  status              String            @default("ACTIVE")
+  User                User?             @relation(fields: [userId], references: [id])
+  userId              Int?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+}
