@@ -7,9 +7,10 @@ import { NotificationModule } from './notification/notification.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { ProjectModule } from './project/project.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
+import { EditorModule } from './modules/editor/editor.module';
 
 @Module({
-  imports: [AuthModule, UserModule, NotificationModule, AnalyticsModule, ProjectModule, PrismaModule],
+  imports: [AuthModule, UserModule, NotificationModule, AnalyticsModule, ProjectModule, PrismaModule, EditorModule],
   controllers: [AppController],
   providers: [AppService],
 })

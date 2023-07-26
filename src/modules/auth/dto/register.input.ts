@@ -6,11 +6,6 @@ export class RegistrationUserInput {
   @IsString()
   @Field()
   @Length(3, 40)
-  name: string;
-
-  @IsString()
-  @Field()
-  @Length(3, 40)
   username: string;
 
   @IsString()

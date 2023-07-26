@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginUserInput } from './dto/login.input';
 import { ResetPasswordInput } from './dto/reset-password.input';
 import { UserService } from '../user/user.service';
+import { generateUniqueRandomString } from '../../utils/random-string.util';
 
 @Injectable()
 export class AuthService {
@@ -22,14 +23,6 @@ export class AuthService {
     );
     if (userFoundWithUsername) {
       throw new BadRequestException('user already exists with this username');
-    }
-    const userFoundWithPassword = await this.userService.findUserByPhoneNumber(
-      userRegInput.phonenumber,
-    );
-    if (userFoundWithPassword) {
-      throw new BadRequestException(
-        'user already exists with this phonenumber',
-      );
     }
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
@@ -74,21 +67,22 @@ export class AuthService {
     if (userResetInput.newPassword !== userResetInput.passwordConfirm) {
       throw new BadRequestException('password do not match');
     }
-    const userFound = await this.userService.findUserByUserNameOrPhoneNumber(
+    const userFound = await this.userService.findUserByUserName(
       userResetInput.username,
-      userResetInput.phonenumber,
     );
 
     const checked = await this.checkPassword(
       userResetInput.oldPassword,
       userFound.password,
     );
+
     if (!checked) {
       throw new BadRequestException('provided old password is not valid !');
     }
     const hashedNewPassword = await this.hashingPassword(
       userResetInput.newPassword,
     );
+
     const userRecovery = await this.prismaService.user.update({
       where: {
         username: userFound.username,
@@ -98,6 +92,7 @@ export class AuthService {
         password: hashedNewPassword,
       },
     });
+
     const token = await this.assignToken(userRecovery);
     delete userRecovery.password;
     return { userRecovery, token };
