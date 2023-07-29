@@ -1,73 +1,216 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## Wakatime Clone GraphQL-based Webservice TS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a Wakatime clone developed as a GraphQL-based webservice using TypeScript and NestJS. It aims to provide time tracking and productivity analysis for developers by integrating with various code editors and providing insightful reports on their coding activity.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **User Authentication**: Users can sign up, log in, and manage their accounts. Authentication is required to access certain features and user-specific data.
+- **Editor Plugin Integration**: The webservice will support integrating with various code editors, allowing users to track their coding activity automatically.
+- **Time Tracking**: Users' coding activity, including time spent on projects, files, and languages, will be recorded and available for analysis.
+- **Dashboard**: Users will have access to a personalized dashboard displaying their coding statistics, such as total coding time, most used programming languages, and productivity trends.
+- **Reports**: Users can generate detailed reports based on specific time periods, projects, or languages. These reports will help users analyze their productivity and coding habits.
+- **API Key Management**: Users will have API keys that can be used to authenticate requests to the webservice for integration with other tools and services.
+- **Leaderboard**: A leaderboard will be available to compare users' coding activity and productivity with others on the platform.
+- **Notifications**: Users can receive notifications based on their coding activity, achievements, or other relevant events.
+- **Settings**: Users can customize various settings, including privacy preferences, notification preferences, and integration options.
+- **Analytics**: The webservice will provide data analytics and insights on coding patterns, productivity trends, and other relevant metrics.
 
-## Installation
+## Tech Stack
 
-```bash
-$ npm install
-```
+The project will be developed using the following technologies:
 
-## Running the app
+- TypeScript: The primary programming language for the backend and frontend (if applicable).
+- NestJS: A Node.js framework for building scalable and efficient server-side applications.
+- GraphQL: A query language for APIs, allowing clients to request exactly the data they need.
+- TypeORM: An Object-Relational Mapping (ORM) library for TypeScript that simplifies database operations.
+- PostgreSQL: A powerful open-source relational database.
+
+## Getting Started
+
+To run this project locally, follow these steps:
+
+**Clone the repository:**
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone https://github.com/basemax/WakatimeGraphQLTS.git
+cd WakatimeGraphQLTS
 ```
 
-## Test
+**Install dependencies:**
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+npm install
 ```
 
-## Support
+**Set up the database:**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Make sure you have PostgreSQL installed and running. Create a new database for the project and update the database configuration in the `.env` file.
 
-## Stay in touch
+**Set environment variables:**
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Create a `.env` file based on the .env.example file and set the required environment variables.
+
+Build and run the project:
+
+```
+npm run build
+npm run start
+```
+
+**Access the webservice:**
+
+The webservice will be accessible at `http://localhost:<PORT>/graphql`, where `<PORT>` is the port specified in your `.env` file or the default port.
+
+## GraphQL
+
+**Queries:**
+
+- `getUserProfile` - Get the details of the authenticated user's profile.
+- `getUserCodingActivity(startDate: String!, endDate: String!)` - Get the coding activity of the authenticated user for a specific time period.
+- `getProjectDetails(projectID: ID!)` - Get details of a specific project.
+- `getProjects` - Get a list of all projects for the authenticated user.
+- `getAPIKey` - Get the API key of the authenticated user.
+- `checkAPIKeyValidity(apiKey: String!)` - Check the validity of an API key.
+- `getEditorData(editorID: ID!)` - Get data from a specific code editor.
+- `getEditorDataByDate(editorID: ID!, date: String!)` - Get data from a specific code editor for a particular date.
+
+**Mutations:**
+
+- `signUp(username: String!, email: String!, password: String!)` - Register a new user.
+- `logIn(email: String!, password: String!)` - Log in an existing user.
+- `logOut` - Log out the authenticated user.
+- `updateProfile(username: String, email: String, avatar: String)` - Update the user's profile details.
+- `createAPIKey` - Generate a new API key for the authenticated user.
+- `deleteAPIKey(apiKeyID: ID!)` - Delete an API key for the authenticated user.
+- `trackCodingActivity(projectID: ID!, language: String!, file: String!, startTime: String!, endTime: String!)` - Track coding activity for the authenticated user.
+- `generateReport(startDate: String!, endDate: String!)` - Generate a coding activity report for a specific time period.
+- `setNotificationPreferences(notifications: [String]!)` - Set notification preferences for the authenticated user.
+- `setIntegrationSettings(editor: String!, apiKey: String!)` - Set integration settings for a code editor.
+- `joinLeaderboard` - Join the coding activity leaderboard.
+- `leaveLeaderboard` - Leave the coding activity leaderboard.
+- `submitFeedback(subject: String!, message: String!)` - Submit feedback to the administrators.
+- `deleteAccount(password: String!)` - Delete the authenticated user's account (requires password confirmation).
+
+### Editor-related Mutations:
+
+- `saveEditorData(editorID: ID!, data: JSON!)` - Save editor data in the database for a specific code editor.
+- `trackEditorActivity(editorID: ID!)` - Start tracking editor activity for a specific code editor.
+- `stopEditorActivity(editorID: ID!)` - Stop tracking editor activity for a specific code editor.
+- `updateEditorActivity(editorID: ID!, data: JSON!)` - Update editor activity data for a specific code editor.
+
+### Additional Auth-related Queries:
+
+- `forgotPassword(email: String!)` - Request a password reset link to be sent to the provided email.
+- `resetPassword(resetToken: String!, newPassword: String!)` - Reset the password using the reset token received via email.
+
+And more queries, and mutations.
+
+## GraphQL Models
+
+```graphql
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  password: String!  # Note: Password should not be returned by queries for security reasons.
+  avatar: String
+  createdAt: String!
+  updatedAt: String!
+  apiKeys: [APIKey!]
+  projects: [Project!]
+  codingActivity: [CodingActivity!]
+  notifications: [String!]
+  leaderboardRank: Int
+}
+
+type APIKey {
+  id: ID!
+  key: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Project {
+  id: ID!
+  name: String!
+  createdAt: String!
+  updatedAt: String!
+  contributors: [User!]
+  codingActivity: [CodingActivity!]
+}
+
+type CodingActivity {
+  id: ID!
+  user: User!
+  project: Project!
+  language: String!
+  file: String!
+  startTime: String!
+  endTime: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Query {
+  getUserProfile: User!
+  getUserCodingActivity(startDate: String!, endDate: String!): [CodingActivity!]
+  getProjectDetails(projectID: ID!): Project!
+  getProjects: [Project!]
+  getAPIKey: APIKey!
+  checkAPIKeyValidity(apiKey: String!): Boolean!
+  getEditorData(editorID: ID!): JSON!
+  getEditorDataByDate(editorID: ID!, date: String!): JSON!
+}
+
+type Mutation {
+  signUp(username: String!, email: String!, password: String!): User!
+  logIn(email: String!, password: String!): User!
+  logOut: Boolean!
+  updateProfile(username: String, email: String, avatar: String): User!
+  createAPIKey: APIKey!
+  deleteAPIKey(apiKeyID: ID!): Boolean!
+  trackCodingActivity(projectID: ID!, language: String!, file: String!, startTime: String!, endTime: String!): CodingActivity!
+  generateReport(startDate: String!, endDate: String!): [CodingActivity!]
+  setNotificationPreferences(notifications: [String!]!): User!
+  setIntegrationSettings(editor: String!, apiKey: String!): Boolean!
+  joinLeaderboard: Boolean!
+  leaveLeaderboard: Boolean!
+  submitFeedback(subject: String!, message: String!): Boolean!
+  deleteAccount(password: String!): Boolean!
+  forgotPassword(email: String!): Boolean!
+  resetPassword(resetToken: String!, newPassword: String!): Boolean!
+  saveEditorData(editorID: ID!, data: JSON!): Boolean!
+  trackEditorActivity(editorID: ID!): Boolean!
+  stopEditorActivity(editorID: ID!): Boolean!
+  updateEditorActivity(editorID: ID!, data: JSON!): Boolean!
+}
+```
+
+## Contributing
+
+We welcome contributions to improve and enhance this Wakatime clone. To contribute, follow these steps:
+
+- Fork the repository.
+- Create a new branch for your feature or bug fix.
+- Commit your changes and push them to your fork.
+- Create a pull request to the main branch of the original repository.
+- Wait for code review and address any feedback.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the GPL-3.0 License - see the LICENSE file for details.
+
+## Acknowledgments
+
+Wakatime for inspiring this project and providing valuable insights into developers' productivity.
+
+The open-source community for their contributions to the technologies used in this project.
+
+## Contact
+
+If you have any questions or need further assistance, you can contact the project maintainers.
+
+Feel free to open an issue or submit a pull request! Happy coding!
+
+Copyright 2023, Max Base
