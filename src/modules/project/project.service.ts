@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Project } from '@prisma/client';
 
@@ -18,5 +18,19 @@ export class ProjectService {
   async getProjects(): Promise<Project[]> {
     const projects = await this.prismaService.project.findMany();
     return projects;
+  }
+
+  async getUsersProjects(user: any): Promise<Project[]> {
+    const id = user.id;
+    const userFound = await this.prismaService.user.findUnique({
+      where: { id: id },
+      include: {
+        projects: true,
+      },
+    });
+    if (!userFound) {
+      throw new BadRequestException('user did not found with this id provided');
+    }
+    return userFound.projects;
   }
 }

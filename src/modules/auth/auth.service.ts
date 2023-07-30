@@ -27,8 +27,13 @@ export class AuthService {
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(userRegInput.password, salt);
+    const AtUser = '@' + userRegInput.username.replace(/ /g, '-');
     const userCreated = await this.prismaService.user.create({
-      data: { ...userRegInput, password: hashedPassword },
+      data: {
+        ...userRegInput,
+        password: hashedPassword,
+        userAtId: AtUser,
+      },
     });
     const token = await this.assignToken(userCreated);
     delete userCreated.password;
@@ -36,12 +41,9 @@ export class AuthService {
   }
 
   async login(userLoginInput: LoginUserInput) {
-    const userFound = await this.userService.findUserByUserName(
-      userLoginInput.username,
+    const userFound = await this.userService.findUserByEmail(
+      userLoginInput.email,
     );
-    if (!userFound) {
-      throw new BadRequestException('there is no user with this username');
-    }
     const checked = await this.checkPassword(
       userLoginInput.password,
       userFound.password,
@@ -56,9 +58,6 @@ export class AuthService {
 
   async userLogOut(id: number) {
     const userFound = await this.userService.findUserById(id);
-    if (!userFound) {
-      throw new BadRequestException('user did not found with provided id');
-    }
     delete userFound.password;
     return userFound;
   }

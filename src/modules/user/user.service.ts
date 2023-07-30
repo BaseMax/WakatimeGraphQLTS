@@ -3,6 +3,8 @@ import { Activity, Project, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
+import { UpdateProfileInput } from './dto/updateProfile.dto';
+import { userInfo } from 'os';
 
 @Injectable()
 export class UserService {
@@ -17,20 +19,6 @@ export class UserService {
       throw new BadRequestException('user did not found with this id provided');
     }
     return userFound.APIKEY;
-  }
-
-  async getProjects(user: any): Promise<Project[]> {
-    const id = user.id;
-    const userFound = await this.prismaService.user.findUnique({
-      where: { id: id },
-      include: {
-        projects: true,
-      },
-    });
-    if (!userFound) {
-      throw new BadRequestException('user did not found with this id provided');
-    }
-    return userFound.projects;
   }
 
   async checkAPIKeyValidity(apiKey: string): Promise<User> {
@@ -62,6 +50,26 @@ export class UserService {
       },
     });
     return uuid;
+  }
+
+  async deleteAPIKey(apiKEYId: string): Promise<User> {
+    const userFoundWithId = await this.prismaService.user.findUnique({
+      where: {
+        APIKEY: apiKEYId,
+      },
+    });
+    if (!userFoundWithId) {
+      throw new BadRequestException('there is no user with this api key id');
+    }
+    const updatedUser = await this.prismaService.user.update({
+      where: {
+        APIKEY: apiKEYId,
+      },
+      data: {
+        APIKEY: '',
+      },
+    });
+    return userFoundWithId;
   }
 
   async getUserProfile(user: any): Promise<User> {
@@ -96,7 +104,6 @@ export class UserService {
     return activities;
   }
 
-
   async deleteAccount(password: string, user: any): Promise<User> {
     const id = user.id;
     const userFound = await this.prismaService.user.findUnique({
@@ -118,6 +125,39 @@ export class UserService {
       },
     });
     return userDeleted;
+  }
+
+  async updateProfile(input: UpdateProfileInput, user: any) {
+    const userFound = await this.findUserById(user.id);
+    const updatedUser = await this.prismaService.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        ...input,
+      },
+    });
+    return updatedUser;
+  }
+
+  async trackCodingActivity(
+    projectID: number,
+    language: string,
+    file: string,
+    startTime: string,
+    endTime: string,
+    user: any,
+  ) {
+    const userFound = await this.prismaService.user.findFirst({
+      where: {
+        projects: {
+          some: {
+            id: projectID,
+          },
+        },
+      },
+    });
+    
   }
 
   async findUserByUserName(username: string): Promise<User | undefined | null> {
@@ -144,6 +184,18 @@ export class UserService {
     });
     if (!userFound) {
       throw new BadRequestException('user with provided id did not found');
+    }
+    return userFound;
+  }
+
+  async findUserByEmail(email: string): Promise<User | undefined> {
+    const userFound = await this.prismaService.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    if (!userFound) {
+      throw new BadRequestException('user did not found with email provided');
     }
     return userFound;
   }

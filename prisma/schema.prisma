@@ -16,7 +16,7 @@ model User {
   userAtId          String              @unique
   password          String
   bio               String
-  email             String
+  email             String              @unique
   APIKEY            String              @unique @default(uuid())
   codeActivity      Activity[]
   NotificationToken NotificationToken[]
@@ -25,11 +25,13 @@ model User {
 }
 
 model Activity {
-  id        Int      @id @default(autoincrement())
-  startDate DateTime
-  endDate   DateTime
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    Int?
+  id         Int      @id @default(autoincrement())
+  startDate  DateTime
+  endDate    DateTime
+  language   Language @relation(fields: [languageId], references: [id])
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     Int?
+  languageId Int
 }
 
 model Project {
@@ -43,10 +45,11 @@ model Project {
 }
 
 model Language {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
-  Project   Project? @relation(fields: [projectId], references: [id])
+  Project   Project?   @relation(fields: [projectId], references: [id])
   projectId Int?
+  Activity  Activity[]
 }
 
 model Editor {

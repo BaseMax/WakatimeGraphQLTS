@@ -10,4 +10,8 @@ export class LoginUserInput {
   @IsString()
   @Field()
   password: string;
+
+  @IsString()
+  @Field()
+  email: string;
 }

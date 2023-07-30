@@ -21,4 +21,9 @@ export class RegistrationUserInput {
   @IsString()
   @Field()
   bio: string;
+
+  @IsOptional()
+  @IsString()
+  @Field()
+  email: string;
 }

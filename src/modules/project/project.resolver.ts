@@ -2,6 +2,7 @@ import { ParseIntPipe } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Project } from './project.model';
 import { ProjectService } from './project.service';
+import { GqlUser } from '../user/user.decorator';
 
 @Resolver(() => Project)
 export class ProjectResolver {
@@ -15,5 +16,10 @@ export class ProjectResolver {
   @Query(() => Project)
   async getProjectDetails(@Args('projectId', ParseIntPipe) projectId: number) {
     return await this.projectService.getProjectDetails(projectId);
+  }
+
+  @Query(() => [Project])
+  async getUsersProjects(@GqlUser() user: any) {
+    return await this.projectService.getUsersProjects(user);
   }
 }
