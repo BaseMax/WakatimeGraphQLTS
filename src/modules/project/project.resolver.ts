@@ -1,4 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { ParseIntPipe } from '@nestjs/common';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Project } from './project.model';
+import { ProjectService } from './project.service';
 
-@Injectable()
-export class Project {}
+@Resolver(() => Project)
+export class ProjectResolver {
+  constructor(private projectService: ProjectService) {}
+
+  @Query(() => [Project])
+  async getProjects() {
+    return await this.projectService.getProjects();
+  }
+
+  @Query(() => Project)
+  async getProjectDetails(@Args('projectId', ParseIntPipe) projectId: number) {
+    return await this.projectService.getProjectDetails(projectId);
+  }
+}

@@ -17,7 +17,7 @@ export class AuthService {
     private jwtService: JwtService,
     private userService: UserService,
   ) {}
-  async register(userRegInput: RegistrationUserInput) {
+  async signUp(userRegInput: RegistrationUserInput) {
     const userFoundWithUsername = await this.userService.findUserByUserName(
       userRegInput.username,
     );

@@ -11,12 +11,12 @@ export class AuthResolver {
   constructor(private service: AuthService) {}
 
   @Mutation(() => AuthModel)
-  async userRegister(
+  async signUp(
     @Context() ctx: any,
     @Args('input') input: RegistrationUserInput,
   ) {
     try {
-      const { userCreated, token } = await this.service.register(input);
+      const { userCreated, token } = await this.service.signUp(input);
       ctx.req.user = userCreated;
       return { token, ...userCreated };
     } catch (error) {

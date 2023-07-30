@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Resolver } from '@nestjs/graphql';
 
-@Injectable()
-export class Analytics {}
+@Resolver()
+export class AnalyticsResolver {}

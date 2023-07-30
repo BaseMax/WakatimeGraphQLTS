@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { Project, User } from '@prisma/client';
+import { Activity, Project, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
@@ -63,6 +63,39 @@ export class UserService {
     });
     return uuid;
   }
+
+  async getUserProfile(user: any): Promise<User> {
+    const id = user.id;
+    const userFounder = await this.prismaService.user.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (!userFounder) {
+      throw new BadRequestException('user did not found with this id');
+    }
+    return userFounder;
+  }
+
+  async getUserCodeActivity(
+    startDate: Date,
+    endDate: Date,
+    user: any,
+  ): Promise<Activity[]> {
+    // return [User]
+    const userFound = await this.findUserById(user.id);
+    const activities: Activity[] = await this.prismaService.activity.findMany({
+      where: {
+        AND: [
+          { startDate: { gte: startDate } },
+          { endDate: { lte: endDate } },
+          { userId: user.id },
+        ],
+      },
+    });
+    return activities;
+  }
+
 
   async deleteAccount(password: string, user: any): Promise<User> {
     const id = user.id;

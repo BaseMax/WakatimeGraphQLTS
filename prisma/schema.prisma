@@ -18,9 +18,18 @@ model User {
   bio               String
   email             String
   APIKEY            String              @unique @default(uuid())
+  codeActivity      Activity[]
   NotificationToken NotificationToken[]
   Notification      Notification[]
   projects          Project[]
+}
+
+model Activity {
+  id        Int      @id @default(autoincrement())
+  startDate DateTime
+  endDate   DateTime
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
 }
 
 model Project {
