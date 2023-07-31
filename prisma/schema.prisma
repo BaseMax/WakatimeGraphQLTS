@@ -11,17 +11,29 @@ datasource db {
 }
 
 model User {
-  id                Int                 @id @default(autoincrement())
-  username          String              @unique
-  userAtId          String              @unique
-  password          String
-  bio               String
-  email             String              @unique
-  APIKEY            String              @unique @default(uuid())
-  codeActivity      Activity[]
-  NotificationToken NotificationToken[]
-  Notification      Notification[]
-  projects          Project[]
+  id                   Int                 @id @default(autoincrement())
+  username             String              @unique
+  userAtId             String              @unique
+  password             String
+  bio                  String
+  email                String              @unique
+  APIKEY               String              @unique @default(uuid())
+  codeActivity         Activity[]
+  NotificationToken    NotificationToken[]
+  Notification         Notification[]
+  projects             Project[]
+  Team                 Team?               @relation(fields: [teamId], references: [id])
+  teamId               Int?
+  Group                Group?              @relation(fields: [groupId], references: [id])
+  groupId              Int?
+  Dashboard            Dashboard?          @relation(fields: [dashboardId], references: [id])
+  dashboardId          Int?
+  adminGroups          Group[]             @relation(name: "admin")
+  billingManagerGroups Group[]             @relation(name: "billing-managers")
+  devGroups            Group[]             @relation(name: "devs")
+  inviteOnlyGroups     Group[]             @relation(name: "invite-only")
+  managersGroups       Group[]             @relation(name: "managers")
+  ownersGroups         Group[]             @relation(name: "owners")
 }
 
 model Activity {
@@ -35,13 +47,17 @@ model Activity {
 }
 
 model Project {
-  id        Int        @id @default(autoincrement())
-  name      String
-  totalTime String
-  languages Language[]
-  editors   Editor[]
-  User      User?      @relation(fields: [userId], references: [id])
-  userId    Int?
+  id          Int        @id @default(autoincrement())
+  name        String
+  totalTime   String
+  languages   Language[]
+  editors     Editor[]
+  files       File       @relation(fields: [fileId], references: [id])
+  User        User?      @relation(fields: [userId], references: [id])
+  userId      Int?
+  fileId      Int
+  Dashboard   Dashboard? @relation(fields: [dashboardId], references: [id])
+  dashboardId Int?
 }
 
 model Language {
@@ -58,6 +74,51 @@ model Editor {
 
   Project   Project? @relation(fields: [projectId], references: [id])
   projectId Int?
+}
+
+model File {
+  id        Int       @id @default(autoincrement())
+  name      String
+  timeSpent Float
+  Project   Project[]
+}
+
+model Team {
+  id     Int     @id @default(autoincrement())
+  name   String
+  user   User[]
+  groups Group[]
+}
+
+model Group {
+  id              Int         @id @default(autoincrement())
+  name            String
+  admins          User[]      @relation(name: "admin")
+  billingManagers User[]      @relation(name: "billing-managers")
+  devs            User[]      @relation(name: "devs")
+  inviteOnly      User[]      @relation(name: "invite-only")
+  managers        User[]      @relation(name: "managers")
+  owners          User[]      @relation(name: "owners")
+  dashboards      Dashboard[]
+  Team            Team?       @relation(fields: [teamId], references: [id])
+  teamId          Int?
+  User            User[]
+}
+
+model Dashboard {
+  id              Int            @id @default(autoincrement())
+  name            String
+  alerts          Notification[]
+  projects        Project[]
+  timeZone        String //could change in future
+  singleTimeZone  Boolean
+  timeout         Int
+  restrictViewing Boolean
+  anonymous       Boolean
+  emailReport     Boolean
+  members         User[]
+  Group           Group?         @relation(fields: [groupId], references: [id])
+  groupId         Int?
 }
 
 model NotificationToken {
@@ -81,4 +142,6 @@ model Notification {
   userId              Int?
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
+  Dashboard           Dashboard?        @relation(fields: [dashboardId], references: [id])
+  dashboardId         Int?
 }

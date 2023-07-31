@@ -157,6 +157,10 @@ export class UserService {
         },
       },
     });
+
+  }
+
+  async generateReport(startDate : string, endDate : string) {
     
   }
 
