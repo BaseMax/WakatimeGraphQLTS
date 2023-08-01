@@ -11,39 +11,46 @@ datasource db {
 }
 
 model User {
-  id                   Int                 @id @default(autoincrement())
-  username             String              @unique
-  userAtId             String              @unique
-  password             String
-  bio                  String
-  email                String              @unique
-  APIKEY               String              @unique @default(uuid())
-  codeActivity         Activity[]
-  NotificationToken    NotificationToken[]
-  Notification         Notification[]
-  projects             Project[]
-  Team                 Team?               @relation(fields: [teamId], references: [id])
-  teamId               Int?
-  Group                Group?              @relation(fields: [groupId], references: [id])
-  groupId              Int?
-  Dashboard            Dashboard?          @relation(fields: [dashboardId], references: [id])
-  dashboardId          Int?
-  adminGroups          Group[]             @relation(name: "admin")
-  billingManagerGroups Group[]             @relation(name: "billing-managers")
-  devGroups            Group[]             @relation(name: "devs")
-  inviteOnlyGroups     Group[]             @relation(name: "invite-only")
-  managersGroups       Group[]             @relation(name: "managers")
-  ownersGroups         Group[]             @relation(name: "owners")
+  id                      Int                 @id @default(autoincrement())
+  username                String              @unique
+  userAtId                String              @unique
+  password                String
+  bio                     String
+  email                   String              @unique
+  APIKEY                  String              @unique @default(uuid())
+  activities              Activity[]
+  NotificationToken       NotificationToken[]
+  Notification            Notification[]
+  projects                Project[]
+  teams                   Team[]
+  Group                   Group?              @relation(fields: [groupId], references: [id])
+  groupId                 Int?
+  Dashboard               Dashboard?          @relation(fields: [dashboardId], references: [id])
+  dashboardId             Int?
+  adminGroups             Group[]             @relation(name: "admin")
+  billingManagerGroups    Group[]             @relation(name: "billing-managers")
+  devGroups               Group[]             @relation(name: "devs")
+  inviteOnlyGroups        Group[]             @relation(name: "invite-only")
+  managersGroups          Group[]             @relation(name: "managers")
+  ownersGroups            Group[]             @relation(name: "owners")
+  notificationsType       String[]            @default(["PUSH-NOTIFICATION"])
+  notificationDisturbHour String[]
+  notificationStatus      String              @default("ACTIVE")
+  editors                 Editor[]
+  LeaderBoard             LeaderBoard?        @relation(fields: [leaderBoardId], references: [id])
+  leaderBoardId           Int?
 }
 
 model Activity {
-  id         Int      @id @default(autoincrement())
-  startDate  DateTime
-  endDate    DateTime
-  language   Language @relation(fields: [languageId], references: [id])
-  User       User?    @relation(fields: [userId], references: [id])
-  userId     Int?
-  languageId Int
+  id        Int      @id @default(autoincrement())
+  startDate DateTime
+  endDate   DateTime
+  language  String
+  file      String
+  User      User?    @relation(fields: [userId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id])
+  userId    Int?
+  projectId Int
 }
 
 model Project {
@@ -51,42 +58,33 @@ model Project {
   name        String
   totalTime   String
   languages   Language[]
-  editors     Editor[]
-  files       File       @relation(fields: [fileId], references: [id])
+  editors     Editor[]   @relation("EditorsProjects")
   User        User?      @relation(fields: [userId], references: [id])
   userId      Int?
-  fileId      Int
   Dashboard   Dashboard? @relation(fields: [dashboardId], references: [id])
   dashboardId Int?
+  Activity    Activity[]
 }
 
 model Language {
-  id        Int        @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
-  Project   Project?   @relation(fields: [projectId], references: [id])
-  projectId Int?
-  Activity  Activity[]
-}
-
-model Editor {
-  id   Int    @id @default(autoincrement())
-  name String
-
   Project   Project? @relation(fields: [projectId], references: [id])
   projectId Int?
 }
 
-model File {
-  id        Int       @id @default(autoincrement())
-  name      String
-  timeSpent Float
-  Project   Project[]
+model Editor {
+  id       Int       @id @default(autoincrement())
+  name     String
+  Projects Project[] @relation("EditorsProjects")
+  User     User?     @relation(fields: [userId], references: [id])
+  userId   Int?
 }
 
 model Team {
   id     Int     @id @default(autoincrement())
   name   String
-  user   User[]
+  users  User[]
   groups Group[]
 }
 
@@ -119,6 +117,12 @@ model Dashboard {
   members         User[]
   Group           Group?         @relation(fields: [groupId], references: [id])
   groupId         Int?
+}
+
+model LeaderBoard {
+  id    Int    @id @default(autoincrement())
+  name  String
+  users User[]
 }
 
 model NotificationToken {

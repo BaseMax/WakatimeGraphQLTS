@@ -10,9 +10,11 @@ import { PrismaModule } from './modules/prisma/prisma.module';
 import { EditorModule } from './modules/editor/editor.module';
 import { TeamModule } from './modules/team/team.module';
 import { InvoiceModule } from './invoice/invoice.module';
+import { GoalModule } from './modules/goal/goal.module';
+import { LeaderboardsModule } from './modules/leaderboards/leaderboards.module';
 
 @Module({
-  imports: [AuthModule, UserModule, NotificationModule, AnalyticsModule, ProjectModule, PrismaModule, EditorModule, TeamModule, InvoiceModule],
+  imports: [AuthModule, UserModule, NotificationModule, AnalyticsModule, ProjectModule, PrismaModule, EditorModule, TeamModule, InvoiceModule, GoalModule, LeaderboardsModule],
   controllers: [AppController],
   providers: [AppService],
 })

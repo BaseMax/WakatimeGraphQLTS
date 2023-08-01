@@ -90,7 +90,6 @@ export class UserService {
     endDate: Date,
     user: any,
   ): Promise<Activity[]> {
-    // return [User]
     const userFound = await this.findUserById(user.id);
     const activities: Activity[] = await this.prismaService.activity.findMany({
       where: {
@@ -147,7 +146,7 @@ export class UserService {
     startTime: string,
     endTime: string,
     user: any,
-  ) {
+  ): Promise<Activity> {
     const userFound = await this.prismaService.user.findFirst({
       where: {
         projects: {
@@ -157,11 +156,33 @@ export class UserService {
         },
       },
     });
-
-  }
-
-  async generateReport(startDate : string, endDate : string) {
-    
+    const projectFound = await this.prismaService.project.findUnique({
+      where: {
+        id: projectID,
+      },
+    });
+    const userID: number = user.id;
+    const activityCreated = await this.prismaService.activity.create({
+      data: {
+        language: language,
+        startDate: new Date(startTime),
+        endDate: new Date(endTime),
+        userId: userID,
+        projectId: projectID,
+        file: file,
+      },
+    });
+    const updatedUser = await this.prismaService.user.update({
+      where: {
+        id: userID,
+      },
+      data: {
+        activities: {
+          connect: activityCreated,
+        },
+      },
+    });
+    return activityCreated;
   }
 
   async findUserByUserName(username: string): Promise<User | undefined | null> {
@@ -202,6 +223,18 @@ export class UserService {
       throw new BadRequestException('user did not found with email provided');
     }
     return userFound;
+  }
+
+  async findUserByApiKEY(apiKEY: string): Promise<User> {
+    const userFound = await this.prismaService.user.findUnique({
+      where: {
+        APIKEY: apiKEY,
+      },
+    });
+    if (!userFound) {
+      throw new BadRequestException('user did not found with provided apikey');
+    }
+    return userFound
   }
 
   async checkPassword(
