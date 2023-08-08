@@ -62,12 +62,4 @@ export class UserResolver {
       user,
     );
   }
-
-  @Query(() => User)
-  async generateReport(
-    @Args('startDate') startDate: string,
-    @Args('endDate') endDate: string,
-  ) {
-    return await this.userService.generateReport(startDate, endDate);
-  }
 }

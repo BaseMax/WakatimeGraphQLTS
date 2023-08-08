@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { UserService } from '../user/user.service';
 import { CreateTeamDto, UpdateTeamDto } from './dto';
 import { Group, Team } from '@prisma/client';
-
+import { Prisma } from '@prisma/client';
 @Injectable()
 export class TeamService {
   constructor(
@@ -11,12 +11,12 @@ export class TeamService {
     private userService: UserService,
   ) {}
 
-  async getTeams() {
+  async getTeams(): Promise<Team[]> {
     const teams = await this.prismaService.team.findMany();
     return teams;
   }
 
-  async getTeamById(teamID: number) {
+  async getTeamById(teamID: number): Promise<Team> {
     const team = await this.prismaService.team.findUnique({
       where: {
         id: teamID,
@@ -28,12 +28,19 @@ export class TeamService {
     return team;
   }
 
-  async getUsersTeams(user: any) {
-    const userFound = await this.userService.findUserById(user.id);
+  async getUsersTeams(user: any): Promise<Team[]> {
+    const userFound = await this.prismaService.user.findUnique({
+      where: {
+        id: user.id,
+      },
+      include: {
+        teams: true,
+      },
+    });
     return userFound.teams;
   }
 
-  async createTeam(input: CreateTeamDto, user: any) {
+  async createTeam(input: CreateTeamDto, user: any): Promise<Team> {
     const createdTeam = await this.prismaService.team.create({
       data: {
         ...input,
@@ -55,14 +62,20 @@ export class TeamService {
 
   async addTeamMember(teamID: number, memberID: number): Promise<Team> {
     const team = await this.getTeamById(teamID);
-    const user = await this.userService.findUserById(memberID);
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id: memberID,
+      },
+    });
     const teamUpdated = await this.prismaService.team.update({
       where: {
         id: teamID,
       },
       data: {
         users: {
-          connect: user,
+          connect: {
+            id: user.id,
+          },
         },
       },
     });

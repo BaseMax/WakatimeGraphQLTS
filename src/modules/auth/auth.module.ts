@@ -9,6 +9,7 @@ import { PrismaModule } from '../prisma/prisma.module';
 @Module({
   providers: [AuthService, AuthResolver],
   imports: [
+    ConfigModule,
     JwtModule.registerAsync({
       useFactory: (config: ConfigService) => ({
         global: true,
@@ -17,7 +18,6 @@ import { PrismaModule } from '../prisma/prisma.module';
       }),
       inject: [ConfigService],
     }),
-    ConfigModule,
     UserModule,
     PrismaModule,
   ],
