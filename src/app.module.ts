@@ -13,6 +13,8 @@ import { InvoiceModule } from './modules/invoice/invoice.module';
 import { GoalModule } from './modules/goal/goal.module';
 import { LeaderboardsModule } from './modules/leaderboards/leaderboards.module';
 import { ConfigModule } from '@nestjs/config';
+import { MulterModule } from '@nestjs/platform-express';
+import { GraphQLModule } from '@nestjs/graphql';
 
 @Module({
   imports: [
@@ -28,6 +30,12 @@ import { ConfigModule } from '@nestjs/config';
     GoalModule,
     LeaderboardsModule,
     ConfigModule.forRoot({ isGlobal: true }),
+    MulterModule.register({
+      dest: './uploads', // Specify the destination folder
+    }),
+    GraphQLModule.forRoot({
+      autoSchemaFile: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

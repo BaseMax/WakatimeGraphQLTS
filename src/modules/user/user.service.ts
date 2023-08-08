@@ -4,7 +4,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { UpdateProfileInput } from './dto/updateProfile.dto';
-import { userInfo } from 'os';
+import { resolve } from 'path';
+import * as fs from 'fs';
 
 @Injectable()
 export class UserService {
@@ -234,7 +235,7 @@ export class UserService {
     if (!userFound) {
       throw new BadRequestException('user did not found with provided apikey');
     }
-    return userFound
+    return userFound;
   }
 
   async checkPassword(
@@ -242,5 +243,18 @@ export class UserService {
     userSavedPassword: string,
   ): Promise<boolean> {
     return await bcrypt.compare(password, userSavedPassword);
+  }
+
+  async uploadUserProfile(
+    stream: NodeJS.ReadableStream,
+    filename: string,
+  ): Promise<string> {
+    const path = resolve(__dirname, '..', 'uploads', filename);
+    return new Promise((resolve, reject) =>
+      stream
+        .pipe(fs.createWriteStream(path))
+        .on('finish', () => resolve('File uploaded successfully'))
+        .on('error', (error) => reject(error)),
+    );
   }
 }

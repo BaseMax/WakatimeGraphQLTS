@@ -39,6 +39,7 @@ model User {
   editors                 Editor[]
   LeaderBoard             LeaderBoard?        @relation(fields: [leaderBoardId], references: [id])
   leaderBoardId           Int?
+  Goal                    Goal[]
 }
 
 model Activity {
@@ -125,6 +126,17 @@ model LeaderBoard {
   users User[]
 }
 
+model Goal {
+  id                   Int         @id @default(autoincrement())
+  name                 String
+  amount               String
+  unitAmount           UnitAmount  @default(secs)
+  perEachUnit          PerEachUnit @default(day)
+  ignoreDaysWithNoCode Boolean     @default(true)
+  user                 User        @relation(fields: [userId], references: [id])
+  userId               Int
+}
+
 model NotificationToken {
   id                 Int            @id @default(autoincrement())
   user               User           @relation(fields: [userId], references: [id])
@@ -148,4 +160,17 @@ model Notification {
   updatedAt           DateTime          @updatedAt
   Dashboard           Dashboard?        @relation(fields: [dashboardId], references: [id])
   dashboardId         Int?
+}
+
+enum UnitAmount {
+  secs
+  hrs
+  min
+}
+
+enum PerEachUnit {
+  day
+  week
+  month
+  alltime
 }

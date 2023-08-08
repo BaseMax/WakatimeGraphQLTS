@@ -1,6 +1,8 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { IsEmail, IsString, IsUUID } from 'class-validator';
 import { Notification } from '../notification/notification.model';
+import { Editor } from '../project/project.model';
+import { Team } from '../team/team.dto';
 
 @ObjectType('user')
 export class User {
@@ -37,4 +39,47 @@ export class User {
 
   @Field(() => [Notification])
   notifications: Notification[];
+
+  @Field(() => [Team])
+  teams: Team[];
+
+  @Field(() => [Group])
+  adminGroups: Group[];
+
+  @Field(() => [Group])
+  billingManagerGroups: Group[];
+
+  @Field(() => [Group])
+  devGroups: Group[];
+
+  @Field(() => [Group])
+  inviteOnlyGroups: Group[];
+
+  @Field(() => [Group])
+  managersGroups: Group[];
+
+  @Field(() => [Group])
+  ownersGroups: Group[];
+
+  @Field(() => [String])
+  notificationsType: String[];
+
+  @Field(() => [String])
+  notificationDisturbHour: String[];
+
+  @Field(() => String)
+  notificationStatus: String;
+
+  @Field(() => [Editor])
+  editors: Editor[];
+}
+
+@ObjectType('group')
+export class Group {
+  @Field(() => ID)
+  id: number;
+
+  @Field()
+  @IsString()
+  name: string;
 }
