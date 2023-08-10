@@ -162,7 +162,7 @@ model Notification {
   dashboardId         Int?
 }
 
-enum UnitAmount {
+ enum UnitAmount {
   secs
   hrs
   min

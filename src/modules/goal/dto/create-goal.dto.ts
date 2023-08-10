@@ -1,5 +1,17 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsBoolean, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsNumber, IsString } from 'class-validator';
+enum UnitAmount {
+  secs = 'secs',
+  hrs = 'hrs',
+  min = 'min',
+}
+
+enum PerEachUnit {
+  day = 'day',
+  week = 'week',
+  month = 'month',
+  alltime = 'alltime',
+}
 
 @InputType()
 export class CreateGoalDto {
@@ -8,18 +20,18 @@ export class CreateGoalDto {
   name: string;
 
   @Field()
-  @IsNumber()
-  amount: number;
-
-  @Field()
   @IsString()
-  unitAmount: string;
+  amount: string;
 
-  @Field()
-  @IsString()
-  perEachUnit: string;
+  @Field(() => UnitAmount)
+  @IsEnum(UnitAmount)
+  unitAmount: UnitAmount;
+
+  @Field(() => PerEachUnit)
+  @IsEnum(PerEachUnit)
+  perEachUnit: PerEachUnit;
 
   @Field()
   @IsBoolean()
-  ignoreDaysWithNoCode : boolean;
+  ignoreDaysWithNoCode: boolean;
 }
