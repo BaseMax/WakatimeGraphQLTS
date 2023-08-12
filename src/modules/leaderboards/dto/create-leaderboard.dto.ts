@@ -1,12 +1,8 @@
-import { Field, ID, InputType } from '@nestjs/graphql';
-import { IsNumber, IsString, IsOptional } from 'class-validator';
+import { Field, InputType } from '@nestjs/graphql';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 @InputType()
-export class UpdateLeaderBoardInput {
-  @IsNumber()
-  @Field(() => ID)
-  id: number;
-
+export class CreateLeaderBoardInput {
   @IsString()
   @Field()
   name: string;

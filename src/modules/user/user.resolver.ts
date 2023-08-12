@@ -3,7 +3,6 @@ import { User } from './user.model';
 import { UserService } from './user.service';
 import { GqlUser } from './user.decorator';
 import { UpdateProfileInput } from './dto/updateProfile.dto';
-import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -64,12 +63,12 @@ export class UserResolver {
     );
   }
 
-  @Mutation(() => String)
-  async uploadFile(
-    @Args({ name: 'file', type: () => GraphQLUpload })
-    { createReadStream, filename }: FileUpload,
-  ): Promise<string> {
-    const stream = createReadStream();
-    return this.userService.uploadUserProfile(stream, filename);
-  }
+  // @Mutation(() => String)
+  // async uploadFile(
+  //   @Args({ name: 'file', type: () => GraphQLUpload })
+  //   { createReadStream, filename }: FileUpload,
+  // ): Promise<string> {
+  //   const stream = createReadStream();
+  //   return this.userService.uploadUserProfile(stream, filename);
+  // }
 }

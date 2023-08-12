@@ -121,9 +121,14 @@ model Dashboard {
 }
 
 model LeaderBoard {
-  id    Int    @id @default(autoincrement())
-  name  String
-  users User[]
+  id           Int    @id @default(autoincrement())
+  name         String
+  plan         String @default("free")
+  billingCycle String @default("Monthly")
+  paymant      String @default("no-method")
+  coupon       String @default("no-active-coupon")
+  extraInfo    String @default("you have not added any additional information for you projects")
+  users        User[]
 }
 
 model Goal {
@@ -162,7 +167,7 @@ model Notification {
   dashboardId         Int?
 }
 
- enum UnitAmount {
+enum UnitAmount {
   secs
   hrs
   min

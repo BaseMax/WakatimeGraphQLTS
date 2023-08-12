@@ -15,6 +15,7 @@ import { LeaderboardsModule } from './modules/leaderboards/leaderboards.module';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { GraphQLModule } from '@nestjs/graphql';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
@@ -34,8 +35,13 @@ import { GraphQLModule } from '@nestjs/graphql';
       dest: './uploads', // Specify the destination folder
     }),
     GraphQLModule.forRoot({
+      uploads: {
+        maxFileSize: 10000000, // 10 MB
+        maxFiles: 5,
+      },
       autoSchemaFile: true,
     }),
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
