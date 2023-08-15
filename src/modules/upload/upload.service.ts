@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+// import { Injectable } from '@nestjs/common';
+// import { PrismaService } from '../prisma/prisma.service';
 
-@Injectable()
-export class UploadService {
-  constructor(private prismaService: PrismaService) {}
-}
+// @Injectable()
+// export class UploadService {
+//   constructor(private prismaService: PrismaService) {}
+// }

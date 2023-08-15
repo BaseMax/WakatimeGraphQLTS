@@ -9,13 +9,17 @@ import { ProjectModule } from './modules/project/project.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { EditorModule } from './modules/editor/editor.module';
 import { TeamModule } from './modules/team/team.module';
-import { InvoiceModule } from './modules/invoice/invoice.module';
 import { GoalModule } from './modules/goal/goal.module';
 import { LeaderboardsModule } from './modules/leaderboards/leaderboards.module';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { GraphQLModule } from '@nestjs/graphql';
-import { UploadModule } from './modules/upload/upload.module';
+import { ApolloDriver } from '@nestjs/apollo';
+import { join } from 'path';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { UnitAmountScalar } from './custom-scalars/UnitAmountScalar';
+import { User } from './modules/user/user.model';
+import { Group } from './object_types/group';
 
 @Module({
   imports: [
@@ -27,7 +31,6 @@ import { UploadModule } from './modules/upload/upload.module';
     PrismaModule,
     EditorModule,
     TeamModule,
-    InvoiceModule,
     GoalModule,
     LeaderboardsModule,
     ConfigModule.forRoot({ isGlobal: true }),
@@ -35,13 +38,21 @@ import { UploadModule } from './modules/upload/upload.module';
       dest: './uploads', // Specify the destination folder
     }),
     GraphQLModule.forRoot({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
       uploads: {
         maxFileSize: 10000000, // 10 MB
         maxFiles: 5,
       },
-      autoSchemaFile: true,
+      resolvers: {
+        UnitAmount: UnitAmountScalar, // Include the scalar in resolvers
+        User,
+        Group,
+      },
     }),
-    UploadModule,
+    // UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,45 +5,30 @@ import {
   IsBoolean,
   IsEnum,
   IsOptional,
+  IsPositive,
 } from 'class-validator';
-enum UnitAmount {
-  secs = 'secs',
-  hrs = 'hrs',
-  min = 'min',
-}
 
-enum PerEachUnit {
-  day = 'day',
-  week = 'week',
-  month = 'month',
-  alltime = 'alltime',
-}
 @InputType()
 export class UpdateGoalDto {
   @Field(() => ID)
   id: number;
 
-  @Field()
   @IsString()
   @IsOptional()
   name: string;
 
-  @Field()
   @IsString()
   @IsOptional()
   amount: string;
 
-  @Field(() => UnitAmount)
-  @IsEnum(UnitAmount)
-  @IsOptional()
-  unitAmount: UnitAmount;
+  @IsString()
+  @IsPositive()
+  unitAmount: string;
 
-  @Field(() => PerEachUnit)
-  @IsEnum(PerEachUnit)
   @IsOptional()
-  perEachUnit: PerEachUnit;
+  @IsString()
+  perEachUnit: string;
 
-  @Field()
   @IsBoolean()
   @IsOptional()
   ignoreDaysWithNoCode: boolean;

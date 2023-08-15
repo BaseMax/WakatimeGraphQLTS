@@ -1,8 +1,9 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { IsEmail, IsString, IsUUID } from 'class-validator';
 import { Notification } from '../notification/notification.model';
-import { Editor } from '../project/project.model';
+import { Editor } from '../editor/editor.model';
 import { Team } from '../team/team.dto';
+import { Group } from '../../object_types/group';
 
 @ObjectType('user')
 export class User {
@@ -72,14 +73,4 @@ export class User {
 
   @Field(() => [Editor])
   editors: Editor[];
-}
-
-@ObjectType('group')
-export class Group {
-  @Field(() => ID)
-  id: number;
-
-  @Field()
-  @IsString()
-  name: string;
 }

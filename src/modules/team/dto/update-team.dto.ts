@@ -1,7 +1,8 @@
 import { Field, InputType, ID } from '@nestjs/graphql';
-import { Group, User } from '@prisma/client';
 import { IsOptional, IsString, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
+import { User } from 'src/modules/user/user.model';
+import { Group } from '../../../object_types/group';
 
 @InputType()
 export class UpdateTeamDto {

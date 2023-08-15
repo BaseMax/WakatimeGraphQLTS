@@ -1,8 +1,8 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { IsString, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Group } from '@prisma/client';
-import { User } from '@prisma/client';
+import { Group } from '../../object_types/group';
+import { User } from '../user/user.model';
 
 @ObjectType('team')
 export class Team {
@@ -13,12 +13,12 @@ export class Team {
   @IsString()
   name: string;
 
-  @Field()
+  @Field((type) => Group)
   @Type(() => Object)
   @IsOptional()
   group: Group;
 
-  @Field()
+  @Field((type) => User)
   @Type(() => Object)
   @IsOptional()
   user: User;

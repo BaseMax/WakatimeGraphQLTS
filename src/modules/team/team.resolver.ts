@@ -24,7 +24,7 @@ export class TeamResolver {
     return await this.teamService.getUsersTeams(user);
   }
 
-  @Mutation()
+  @Mutation(() => Team)
   async createTeam(@Args('input') input: CreateTeamDto, @GqlUser() user: any) {
     return await this.teamService.createTeam(user, input);
   }
@@ -42,7 +42,7 @@ export class TeamResolver {
     return await this.teamService.addTeamMember(teamID, memberID);
   }
 
-  @Mutation()
+  @Mutation(() => Team)
   async addToGroup(
     @Args('groupID', ParseIntPipe) groupID: number,
     @Args('memberID', ParseIntPipe) memberID: number,

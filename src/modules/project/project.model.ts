@@ -1,5 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
+import { Language, Editor } from '../editor/editor.model';
+import { Type } from 'class-transformer';
 
 @ObjectType('project')
 export class Project {
@@ -7,24 +9,17 @@ export class Project {
   id: number;
 
   @Field()
+  @IsString()
   name: string;
 
   @Field()
+  @IsNumber()
   totalTime: number;
 
   @Field(() => [Language])
+  @Type(() => Object)
   languages: Language[];
 
   @Field(() => [Editor])
   editors: Editor[];
-}
-
-export class Language {
-  @IsString()
-  name: string;
-}
-
-export class Editor {
-  @IsString()
-  editor: string;
 }

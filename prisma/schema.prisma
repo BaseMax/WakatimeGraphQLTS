@@ -132,13 +132,13 @@ model LeaderBoard {
 }
 
 model Goal {
-  id                   Int         @id @default(autoincrement())
+  id                   Int     @id @default(autoincrement())
   name                 String
   amount               String
-  unitAmount           UnitAmount  @default(secs)
-  perEachUnit          PerEachUnit @default(day)
-  ignoreDaysWithNoCode Boolean     @default(true)
-  user                 User        @relation(fields: [userId], references: [id])
+  unitAmount           String  @default("secs")
+  perEachUnit          String  @default("day")
+  ignoreDaysWithNoCode Boolean @default(true)
+  user                 User    @relation(fields: [userId], references: [id])
   userId               Int
 }
 
