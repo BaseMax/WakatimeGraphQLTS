@@ -4,34 +4,30 @@ import { IsNumber, IsString } from 'class-validator';
 @ObjectType('AuthModel')
 export class AuthModel {
   @IsNumber()
-  @Field()
+  @Field({ nullable: true })
   id: number;
 
   @IsString()
-  @Field()
+  @Field({ nullable: true })
   username: string;
 
   @IsString()
-  @Field()
+  @Field({ nullable: true })
   userAtId: string;
 
   @IsString()
-  @Field()
+  @Field({ nullable: true })
   bio: string;
 
   @IsString()
-  @Field()
-  status: string;
+  @Field({ nullable: true })
+  notificationStatus: string;
 
   @IsString()
-  @Field()
-  phonenumber: string;
-
-  @IsString()
-  @Field()
+  @Field({ nullable: true })
   token: string;
 
   @IsString()
-  @Field()
+  @Field({ nullable: true })
   avatar: string;
 }

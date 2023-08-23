@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UserService } from '../user/user.service';
 import { CreateTeamDto, UpdateTeamDto } from './dto';
-import { Group, Team } from '@prisma/client';
+import {Team } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 @Injectable()
 export class TeamService {
@@ -86,7 +86,7 @@ export class TeamService {
     groupID: number,
     memberID: number,
     groupStatus: string,
-  ): Promise<Group> {
+  ) {
     const group = await this.prismaService.group.findUnique({
       where: {
         id: groupID,

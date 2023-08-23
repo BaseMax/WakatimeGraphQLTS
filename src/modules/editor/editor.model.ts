@@ -1,8 +1,9 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, InputType } from '@nestjs/graphql';
 import { IsString } from 'class-validator';
 import { Project } from '../project/project.model';
 
 @ObjectType('editor')
+@InputType('EditorInput')
 export class Editor {
   @Field(() => ID)
   id: number;
@@ -16,6 +17,7 @@ export class Editor {
 }
 
 @ObjectType('language')
+@InputType('LanguageInput')
 export class Language {
   @Field(() => ID)
   id: number;
@@ -28,7 +30,7 @@ export class Language {
   projects: Project[];
 }
 
-// export class EditorInterace { 
+// export class EditorInterace {
 //    @Field(() => ID)
 //   id: number;
 
@@ -37,5 +39,5 @@ export class Language {
 //   name: string;
 
 //   @Field(() => [Project])
-//   projects: Project[]; 
+//   projects: Project[];
 // }

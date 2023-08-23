@@ -1,11 +1,13 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, InputType } from '@nestjs/graphql';
 import { IsEmail, IsString, IsUUID } from 'class-validator';
 import { Notification } from '../notification/notification.model';
 import { Editor } from '../editor/editor.model';
 import { Team } from '../team/team.dto';
 import { Group } from '../../object_types/group';
+import { GroupInput } from '../../input_types/index';
 
 @ObjectType('user')
+@InputType('UserInput')
 export class User {
   @Field(() => ID)
   id: number;
@@ -28,7 +30,7 @@ export class User {
 
   @Field()
   @IsString()
-  status: string;
+  notificationStatus: string;
 
   @Field()
   @IsEmail()
@@ -44,22 +46,22 @@ export class User {
   @Field(() => [Team])
   teams: Team[];
 
-  @Field(() => [Group])
+  @Field(() => [Group], { nullable: true })
   adminGroups: Group[];
 
-  @Field(() => [Group])
+  @Field(() => [Group], { nullable: true })
   billingManagerGroups: Group[];
 
-  @Field(() => [Group])
+  @Field(() => [Group], { nullable: true })
   devGroups: Group[];
 
-  @Field(() => [Group])
+  @Field(() => [Group], { nullable: true })
   inviteOnlyGroups: Group[];
 
-  @Field(() => [Group])
+  @Field(() => [Group], { nullable: true })
   managersGroups: Group[];
 
-  @Field(() => [Group])
+  @Field(() => [Group], { nullable: true })
   ownersGroups: Group[];
 
   @Field(() => [String])
@@ -68,8 +70,8 @@ export class User {
   @Field(() => [String])
   notificationDisturbHour: String[];
 
-  @Field(() => String)
-  notificationStatus: String;
+  // @Field(() => String, { nullable: true })
+  // notificationStatus: String;
 
   @Field(() => [Editor])
   editors: Editor[];

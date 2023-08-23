@@ -13,10 +13,6 @@ export class RegistrationUserInput {
   @Length(6, 100)
   password: string;
 
-  @IsString()
-  @Field()
-  phonenumber: string;
-
   @IsOptional()
   @IsString()
   @Field()

@@ -1,0 +1,280 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type notification {
+  id: ID!
+  title: String!
+  body: String!
+  status: String!
+  user: user!
+  userId: ID!
+}
+
+type project {
+  id: ID!
+  name: String!
+  totalTime: Float!
+  languages: [language!]!
+  editors: [editor!]!
+}
+
+type editor {
+  id: ID!
+  name: String!
+  projects: [project!]!
+}
+
+type language {
+  id: ID!
+  name: String!
+  projects: [project!]!
+}
+
+type group {
+  id: ID!
+  name: String!
+  admins: [user!]!
+  billingManagers: [user!]!
+  devs: [user!]!
+  inviteOnly: [user!]!
+  managers: [user!]!
+  owners: [user!]!
+}
+
+type team {
+  id: ID!
+  name: String!
+  group: group!
+  user: user!
+}
+
+type user {
+  id: ID!
+  username: String!
+  userAtId: String!
+  password: String!
+  bio: String!
+  notificationStatus: String!
+  email: String!
+  APIKEY: String!
+  notifications: [notification!]!
+  teams: [team!]!
+  adminGroups: [group!]
+  billingManagerGroups: [group!]
+  devGroups: [group!]
+  inviteOnlyGroups: [group!]
+  managersGroups: [group!]
+  ownersGroups: [group!]
+  notificationsType: [String!]!
+  notificationDisturbHour: [String!]!
+  editors: [editor!]!
+}
+
+type AuthModel {
+  id: Float
+  username: String
+  userAtId: String
+  bio: String
+  notificationStatus: String
+  token: String
+  avatar: String
+}
+
+type goal {
+  id: ID!
+  name: String!
+  amount: String!
+  unitAmount: String!
+  perEachUnit: String!
+  ignoreDaysWithNoCode: Boolean!
+}
+
+type LeaderBoard {
+  id: ID!
+  plan: String!
+  billingCycle: String!
+  paymant: String!
+  coupon: String!
+  extraInfo: String!
+}
+
+input NotificationInput {
+  id: ID!
+  title: String!
+  body: String!
+  status: String!
+  user: UserInput!
+  userId: ID!
+}
+
+input ProjectInput {
+  id: ID!
+  name: String!
+  totalTime: Float!
+  languages: [LanguageInput!]!
+  editors: [EditorInput!]!
+}
+
+input EditorInput {
+  id: ID!
+  name: String!
+  projects: [ProjectInput!]!
+}
+
+input LanguageInput {
+  id: ID!
+  name: String!
+  projects: [ProjectInput!]!
+}
+
+input GroupInput {
+  id: ID!
+  name: String!
+  admins: [UserInput!]!
+  billingManagers: [UserInput!]!
+  devs: [UserInput!]!
+  inviteOnly: [UserInput!]!
+  managers: [UserInput!]!
+  owners: [UserInput!]!
+}
+
+input TeamInput {
+  id: ID!
+  name: String!
+  group: GroupInput!
+  user: UserInput!
+}
+
+input UserInput {
+  id: ID!
+  username: String!
+  userAtId: String!
+  password: String!
+  bio: String!
+  notificationStatus: String!
+  email: String!
+  APIKEY: String!
+  notifications: [NotificationInput!]!
+  teams: [TeamInput!]!
+  adminGroups: [GroupInput!]
+  billingManagerGroups: [GroupInput!]
+  devGroups: [GroupInput!]
+  inviteOnlyGroups: [GroupInput!]
+  managersGroups: [GroupInput!]
+  ownersGroups: [GroupInput!]
+  notificationsType: [String!]!
+  notificationDisturbHour: [String!]!
+  editors: [EditorInput!]!
+}
+
+type Query {
+  getAPIKey: user!
+  getUserProfile: user!
+  getUserCodingActivity(startDate: DateTime!): user!
+  updateProfile(input: UpdateProfileInput!): user!
+  getProjects: [project!]!
+  getProjectDetails(projectId: Float!): project!
+  getUsersProjects: [project!]!
+  getEditorData(editorId: Float!): editor!
+  getEditorDataByDate(editorId: Float!, date: String!): editor!
+  getTeams: [team!]!
+  getTeam(input: Float!): team!
+  getUsersTeams: [team!]!
+  getGoal(goalID: Float!): goal!
+  getGoals: [goal!]!
+  getLeaderBoards(leaderBoardID: Float!): LeaderBoard!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input UpdateProfileInput {
+  id: ID!
+  name: String!
+  totalTime: Float!
+}
+
+type Mutation {
+  signUp(input: RegistrationUserInput!): AuthModel!
+  userLogin(input: LoginUserInput!): AuthModel!
+  userLogOut(id: Float!): AuthModel!
+  ResetPassword(input: ResetPasswordInput!): AuthModel!
+  createAPIKey: String!
+  deleteAPIKey(apiKEYID: String!): user!
+  trackCodingActivity(projectID: Float!, language: String!, file: String!, startTime: String!, endTime: String!): user!
+  deleteProject(projectID: Float!): project!
+  createTeam(input: CreateTeamDto!): team!
+  updateTeam(input: UpdateTeamDto!): team!
+  addMemberToTeam(teamID: Float!, memberID: Float!): team!
+  addToGroup(groupID: Float!, memberID: Float!, groupStatus: String!): team!
+  createGoal(input: CreateGoalDto!): goal!
+  updateGoal(input: UpdateGoalDto!): goal!
+  deleteGoal(goalID: Float!): goal!
+  createLeaderBoard(input: CreateLeaderBoardInput!): LeaderBoard!
+  updateLeaderBoard(input: UpdateLeaderBoardInput!): LeaderBoard!
+  joinLeaderBoard(leaderBoardID: Float!): LeaderBoard!
+}
+
+input RegistrationUserInput {
+  username: String!
+  password: String!
+  bio: String!
+  email: String!
+}
+
+input LoginUserInput {
+  username: String!
+  password: String!
+  email: String!
+}
+
+input ResetPasswordInput {
+  username: String!
+  oldPassword: String!
+  newPassword: String!
+  passwordConfirm: String!
+}
+
+input CreateTeamDto {
+  name: String!
+}
+
+input UpdateTeamDto {
+  id: ID!
+  name: String!
+  user: UserInput!
+}
+
+input CreateGoalDto {
+  name: String!
+  amount: String!
+  unitAmount: String!
+  perEachUnit: String!
+  ignoreDaysWithNoCode: Boolean!
+}
+
+input UpdateGoalDto {
+  id: ID!
+}
+
+input CreateLeaderBoardInput {
+  name: String!
+  plan: String!
+  billingCycle: String!
+  paymant: String!
+  coupon: String!
+  extraInfo: String!
+}
+
+input UpdateLeaderBoardInput {
+  id: ID!
+  name: String!
+  plan: String!
+  billingCycle: String!
+  paymant: String!
+  coupon: String!
+  extraInfo: String!
+}

@@ -19,7 +19,7 @@ import { join } from 'path';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { UnitAmountScalar } from './custom-scalars/UnitAmountScalar';
 import { User } from './modules/user/user.model';
-import { Group } from './object_types/group';
+// import { Group } from './object_types/group';
 
 @Module({
   imports: [
@@ -42,15 +42,6 @@ import { Group } from './object_types/group';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
-      uploads: {
-        maxFileSize: 10000000, // 10 MB
-        maxFiles: 5,
-      },
-      resolvers: {
-        UnitAmount: UnitAmountScalar, // Include the scalar in resolvers
-        User,
-        Group,
-      },
     }),
     // UploadModule,
   ],

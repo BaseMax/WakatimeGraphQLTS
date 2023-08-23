@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UserService } from '../user/user.service';
 import { NotificationPreferenceDTO } from './dto';
-import { User } from '@prisma/client';
 @Injectable()
 export class NotificationService {
   constructor(
@@ -13,7 +12,7 @@ export class NotificationService {
   async setNotificationPreferences(
     input: NotificationPreferenceDTO,
     user: any,
-  ): Promise<User> {
+  ): Promise<any> {
     const userFound = await this.userService.findUserById(user.id);
     let usersDisturbHours: string[] = [
       ...userFound.notificationDisturbHour,

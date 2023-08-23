@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { User } from '@prisma/client';
+// import { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { RegistrationUserInput } from './dto/register.input';
 import * as bcrypt from 'bcrypt';
@@ -103,7 +103,7 @@ export class AuthService {
     return await bcrypt.hash(password, salt);
   }
 
-  async assignToken(user: User): Promise<String> {
+  async assignToken(user: any): Promise<String> {
     const token = this.jwtService.sign({
       id: user.id,
       username: user.username,

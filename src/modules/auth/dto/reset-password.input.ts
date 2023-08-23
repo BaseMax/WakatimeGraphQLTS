@@ -9,10 +9,6 @@ export class ResetPasswordInput {
 
   @IsString()
   @Field()
-  phonenumber: string;
-
-  @IsString()
-  @Field()
   oldPassword: string;
 
   @IsString()

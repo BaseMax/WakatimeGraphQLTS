@@ -4,9 +4,8 @@ import { IsEmail, IsString, IsUUID } from 'class-validator';
 import { Team } from 'src/modules/team/team.dto';
 import { User } from '../modules/user/user.model';
 
-@ObjectType('group')
-@InputType('GroupInput')
-export class Group {
+@InputType('group')
+export class GroupInput {
   @Field(() => ID)
   id: number;
 

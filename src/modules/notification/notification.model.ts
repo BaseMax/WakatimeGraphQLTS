@@ -1,7 +1,8 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, InputType } from '@nestjs/graphql';
 import { User } from '../user/user.model';
 
 @ObjectType('notification')
+@InputType('NotificationInput')
 export class Notification {
   @Field(() => ID)
   id: number;
