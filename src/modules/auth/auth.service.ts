@@ -24,6 +24,12 @@ export class AuthService {
     if (userFoundWithUsername) {
       throw new BadRequestException('user already exists with this username');
     }
+    const userFoundWithEmail = await this.userService.findUserByEmail(
+      userRegInput.email,
+    );
+    if (userFoundWithEmail) {
+      throw new BadRequestException('user already exists with this email');
+    }
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(userRegInput.password, salt);
@@ -41,9 +47,22 @@ export class AuthService {
   }
 
   async login(userLoginInput: LoginUserInput) {
+    const userFoundWithUserName = await this.userService.findUserByUserName(
+      userLoginInput.username,
+    );
+    if (!userFoundWithUserName) {
+      throw new BadRequestException(
+        'there is no user with this username please change and try again',
+      );
+    }
     const userFound = await this.userService.findUserByEmail(
       userLoginInput.email,
     );
+    if (!userFound) {
+      throw new BadRequestException(
+        'there is no user with this email please change and try again',
+      );
+    }
     const checked = await this.checkPassword(
       userLoginInput.password,
       userFound.password,
@@ -69,6 +88,10 @@ export class AuthService {
     const userFound = await this.userService.findUserByUserName(
       userResetInput.username,
     );
+
+    if (!userFound) {
+      throw new BadRequestException('user with this username did not found');
+    }
 
     const checked = await this.checkPassword(
       userResetInput.oldPassword,

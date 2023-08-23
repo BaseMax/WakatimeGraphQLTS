@@ -220,9 +220,6 @@ export class UserService {
         email: email,
       },
     });
-    if (!userFound) {
-      throw new BadRequestException('user did not found with email provided');
-    }
     return userFound;
   }
 
