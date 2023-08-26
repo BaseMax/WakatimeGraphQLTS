@@ -188,7 +188,6 @@ type Query {
   getAPIKey: user!
   getUserProfile: user!
   getUserCodingActivity(startDate: String!, endDate: String!): [activity!]!
-  updateProfile(input: UpdateProfileInput!): user!
   getProjects: [project!]!
   getProjectDetails(projectId: Float!): project!
   getUsersProjects: [project!]!
@@ -202,18 +201,13 @@ type Query {
   getLeaderBoards(leaderBoardID: Float!): LeaderBoard!
 }
 
-input UpdateProfileInput {
-  id: ID!
-  name: String!
-  totalTime: Float!
-}
-
 type Mutation {
   signUp(input: RegistrationUserInput!): AuthModel!
   userLogin(input: LoginUserInput!): AuthModel!
   userLogOut(id: Float!): AuthModel!
   ResetPassword(input: ResetPasswordInput!): AuthModel!
-  createAPIKey: String!
+  updateProfile(input: UpdateProfileInput!): user!
+  createAPIKey: user!
   deleteAPIKey(apiKEYID: String!): user!
   trackCodingActivity(projectID: Float!, language: String!, file: String!, startTime: String!, endTime: String!): user!
   deleteProject(projectID: Float!): project!
@@ -247,6 +241,12 @@ input ResetPasswordInput {
   oldPassword: String!
   newPassword: String!
   passwordConfirm: String!
+}
+
+input UpdateProfileInput {
+  id: ID!
+  username: String!
+  bio: String!
 }
 
 input CreateTeamDto {

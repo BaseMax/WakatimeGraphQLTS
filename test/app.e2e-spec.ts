@@ -592,7 +592,7 @@ describe('AppController (e2e)', () => {
       expect(get_user_response.body.data.getUserProfile.id).toBeDefined();
     });
 
-    it('should successfuly get users activties ', async () => {
+    it('should successfuly get users activties', async () => {
       const userRegisterInput = {
         username: 'pol',
         password: '123321pp',
@@ -639,6 +639,267 @@ describe('AppController (e2e)', () => {
           get_user_activities_response.body.data.getUserCodingActivity,
         ),
       ).toBe(true);
+    });
+
+    it('should successfuly update user profile', async () => {
+      const userRegisterInput = {
+        username: 'sina',
+        password: '123321pp',
+        email: 'sina@gmail.com',
+        bio: 'this is a bio from sina life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const id = +response.body.data.signUp.id;
+      const mutationQuery = `
+        mutation UpdateProfile($id: ID!, $username: String!, $bio: String!) {
+          updateProfile(input: { id: $id, username: $username, bio: $bio }) {
+            id
+            username
+            userAtId
+            password
+            bio
+            notificationStatus
+            email
+            APIKEY
+            notificationsType
+            notificationDisturbHour
+          }
+        }
+      `;
+      const update_profile_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: mutationQuery,
+          variables: {
+            id: id,
+            username: 'mol',
+            bio: 'this is mol',
+          },
+        });
+      expect(update_profile_response.status).toBe(400);
+      expect(
+        update_profile_response.body.data.updateProfile.username,
+      ).toBeDefined();
+    });
+
+    it('should successfuly get users activties', async () => {
+      const userRegisterInput = {
+        username: 'zee',
+        password: '123321pp',
+        email: 'zee@gmail.com',
+        bio: 'this is a bio from zee life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const get_user_activities_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          query {
+            getUserCodingActivity(startDate : "${'2023-08-25T12:00:00Z'}" , endDate: "${'2023-08-25T13:00:00Z'}"){
+              id
+              language
+              startDate
+              endDate
+              file
+            }
+          }
+        `,
+        });
+      expect(get_user_activities_response.status).toBe(200);
+      expect(
+        Array.isArray(
+          get_user_activities_response.body.data.getUserCodingActivity,
+        ),
+      ).toBe(true);
+    });
+
+    it('should successfuly create api key', async () => {
+      const userRegisterInput = {
+        username: 'mamooriat',
+        password: '123321pp',
+        email: 'mamooriat@gmail.com',
+        bio: 'this is a bio from mamooriat life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const create_api_key_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          mutation {
+            createAPIKey{
+              id
+              username
+              userAtId
+              password
+              bio
+              notificationStatus
+              email
+              APIKEY
+              notificationsType
+              notificationDisturbHour
+            }
+          }
+        `,
+        });
+      expect(create_api_key_response.status).toBe(200);
+      expect(create_api_key_response.body.data.createAPIKey).toBeDefined();
+    });
+
+    it('should successfuly DELETE api key', async () => {
+      const userRegisterInput = {
+        username: 'OOP',
+        password: '123321pp',
+        email: 'OOP@gmail.com',
+        bio: 'this is a bio from OOP life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const delete_api_key_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          mutation {
+            createAPIKey{
+              id
+              username
+              userAtId
+              password
+              bio
+              notificationStatus
+              email
+              APIKEY
+              notificationsType
+              notificationDisturbHour
+            }
+          }
+        `,
+        });
+      expect(delete_api_key_response.status).toBe(200);
+      expect(delete_api_key_response.body.data.createAPIKey).toBeDefined();
+    });
+
+    it('throw error if project id doesnt exist when track-coding-activity', async () => {
+      const userRegisterInput = {
+        username: 'qwqq',
+        password: '123321pp',
+        email: 'qwqq@gmail.com',
+        bio: 'this is a bio from qwqq life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const track_coding_activity_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          mutation {
+            trackCodingActivity{
+              id
+              username
+              userAtId
+              password
+              bio
+              notificationStatus
+              email
+              APIKEY
+              notificationsType
+              notificationDisturbHour
+            }
+          }
+        `,
+        });
+      console.log(
+        'track_coding_activity: ',
+        track_coding_activity_response.body,
+      );
+      expect(track_coding_activity_response.status).toBe(400);
     });
   });
 

@@ -34,13 +34,16 @@ export class UserService {
     return userWithThisAPI;
   }
 
-  async createAPIKey(user: any): Promise<String> {
+  async createAPIKey(user: any): Promise<User> {
     const id = user.id;
     const userFounder = await this.prismaService.user.findUnique({
       where: {
         id: id,
       },
     });
+    if (!userFounder) {
+      throw new BadRequestException('user with this id did not found');
+    }
     const uuid = uuidv4();
     const userUpdate = await this.prismaService.user.update({
       where: {
@@ -50,7 +53,7 @@ export class UserService {
         APIKEY: uuid,
       },
     });
-    return uuid;
+    return userUpdate;
   }
 
   async deleteAPIKey(apiKEYId: string): Promise<User> {
@@ -132,6 +135,10 @@ export class UserService {
     user: any,
   ): Promise<User | null> {
     const userFound = await this.findUserById(user.id);
+    if (!userFound) {
+      throw new BadRequestException('there is no user with this id');
+    }
+    delete input.id;
     const updatedUser = await this.prismaService.user.update({
       where: {
         id: user.id,
@@ -151,6 +158,14 @@ export class UserService {
     endTime: string,
     user: any,
   ): Promise<Activity> {
+    const projectFound = await this.prismaService.project.findUnique({
+      where: {
+        id: projectID,
+      },
+    });
+    if (!projectFound) {
+      throw new BadRequestException('project did not found');
+    }
     const userFound = await this.prismaService.user.findFirst({
       where: {
         projects: {
@@ -160,11 +175,9 @@ export class UserService {
         },
       },
     });
-    const projectFound = await this.prismaService.project.findUnique({
-      where: {
-        id: projectID,
-      },
-    });
+    if (!userFound) {
+      throw new BadRequestException('user with this project id not founds');
+    }
     const userID: number = user.id;
     const activityCreated = await this.prismaService.activity.create({
       data: {

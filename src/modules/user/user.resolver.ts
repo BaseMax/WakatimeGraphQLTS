@@ -33,7 +33,7 @@ export class UserResolver {
   }
 
   @UseGuards(AuthGuard)
-  @Query(() => User)
+  @Mutation(() => User)
   async updateProfile(
     @Args('input') input: UpdateProfileInput,
     @GqlUser() user: any,
@@ -41,16 +41,19 @@ export class UserResolver {
     return await this.userService.updateProfile(input, user);
   }
 
-  @Mutation(() => String)
+  @UseGuards(AuthGuard)
+  @Mutation(() => User)
   async createAPIKey(@GqlUser() user: any) {
     return await this.userService.createAPIKey(user);
   }
 
+  @UseGuards(AuthGuard)
   @Mutation(() => User)
   async deleteAPIKey(@Args('apiKEYID') apiKEYID: string) {
     return await this.userService.deleteAPIKey(apiKEYID);
   }
 
+  @UseGuards(AuthGuard)
   @Mutation(() => User)
   async trackCodingActivity(
     @Args('projectID') projectID: number,
@@ -58,7 +61,7 @@ export class UserResolver {
     @Args('file') file: string,
     @Args('startTime') startTime: string,
     @Args('endTime') endTime: string,
-    @GqlUser() user: any,
+    @GqlUser() user: any, 
   ) {
     return await this.userService.trackCodingActivity(
       projectID,
@@ -69,13 +72,4 @@ export class UserResolver {
       user,
     );
   }
-
-  // @Mutation(() => String)
-  // async uploadFile(
-  //   @Args({ name: 'file', type: () => GraphQLUpload })
-  //   { createReadStream, filename }: FileUpload,
-  // ): Promise<string> {
-  //   const stream = createReadStream();
-  //   return this.userService.uploadUserProfile(stream, filename);
-  // }
 }
