@@ -489,7 +489,158 @@ describe('AppController (e2e)', () => {
     });
   });
 
-  describe('user module', () => {});
+  describe('user module', () => {
+    it('should successfuly get api key ', async () => {
+      const userRegisterInput = {
+        username: 'mamad',
+        password: '123321pp',
+        email: 'mamad@gmail.com',
+        bio: 'this is a bio from mamad life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const api_key_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          query {
+            getAPIKey{
+               id
+                username
+                userAtId
+                password
+                bio
+                notificationStatus
+                email
+                APIKEY
+                notificationsType
+                notificationDisturbHour
+            }
+          }
+        `,
+        });
+      expect(api_key_response.status).toBe(200);
+      expect(api_key_response.body.data.getAPIKey.username).toBeDefined();
+      expect(api_key_response.body.data.getAPIKey.id).toBeDefined();
+    });
+
+    it('should successfuly get user profile ', async () => {
+      const userRegisterInput = {
+        username: 'naser',
+        password: '123321pp',
+        email: 'naser@gmail.com',
+        bio: 'this is a bio from naser life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const get_user_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          query {
+            getUserProfile{
+               id
+                username
+                userAtId
+                password
+                bio
+                notificationStatus
+                email
+                APIKEY
+                notificationsType
+                notificationDisturbHour
+            }
+          }
+        `,
+        });
+      expect(get_user_response.status).toBe(200);
+      expect(get_user_response.body.data.getUserProfile.username).toBeDefined();
+      expect(get_user_response.body.data.getUserProfile.id).toBeDefined();
+    });
+
+    it('should successfuly get users activties ', async () => {
+      const userRegisterInput = {
+        username: 'pol',
+        password: '123321pp',
+        email: 'pol@gmail.com',
+        bio: 'this is a bio from pol life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const get_user_activities_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          query {
+            getUserCodingActivity(startDate : "${'2023-08-25T12:00:00Z'}" , endDate: "${'2023-08-25T13:00:00Z'}"){
+              id
+              language
+              startDate
+              endDate
+              file
+            }
+          }
+        `,
+        });
+      expect(get_user_activities_response.status).toBe(200);
+      expect(
+        Array.isArray(
+          get_user_activities_response.body.data.getUserCodingActivity,
+        ),
+      ).toBe(true);
+    });
+  });
 
   afterAll(async () => {
     await prisma.user.deleteMany();

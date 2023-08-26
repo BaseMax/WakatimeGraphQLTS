@@ -6,8 +6,10 @@ import { UserModule } from '../user/user.module';
 import { AuthResolver } from './auth.resolver';
 import { ConfigService } from '@nestjs/config';
 import { PrismaModule } from '../prisma/prisma.module';
+import { JwtStrategy } from './jwt.strategy';
+
 @Module({
-  providers: [AuthService, AuthResolver],
+  providers: [AuthService, AuthResolver, JwtStrategy],
   imports: [
     ConfigModule,
     JwtModule.registerAsync({

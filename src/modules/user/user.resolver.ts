@@ -3,29 +3,36 @@ import { User } from './user.model';
 import { UserService } from './user.service';
 import { GqlUser } from './user.decorator';
 import { UpdateProfileInput } from './dto/updateProfile.dto';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../auth/auth.guard';
+import { Activity } from '../../models/activity.modle';
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(private userService: UserService) {}
+  @UseGuards(AuthGuard)
   @Query(() => User)
   async getAPIKey(@GqlUser() user: any) {
     return await this.userService.getAPIKey(user);
   }
 
+  @UseGuards(AuthGuard)
   @Query(() => User)
   async getUserProfile(@GqlUser() user: any) {
     return await this.userService.getUserProfile(user);
   }
 
-  @Query(() => User)
+  @UseGuards(AuthGuard)
+  @Query(() => [Activity])
   async getUserCodingActivity(
-    @Args('startDate') startDate: Date,
-    @Args('startDate') endDate: Date,
+    @Args('startDate') startDate: string,
+    @Args('endDate') endDate: string,
     @GqlUser() user: any,
   ) {
     return await this.userService.getUserCodeActivity(startDate, endDate, user);
   }
 
+  @UseGuards(AuthGuard)
   @Query(() => User)
   async updateProfile(
     @Args('input') input: UpdateProfileInput,

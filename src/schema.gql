@@ -71,6 +71,14 @@ type user {
   editors: [editor!]!
 }
 
+type activity {
+  id: ID!
+  language: String!
+  startDate: String!
+  endDate: String!
+  file: String!
+}
+
 type AuthModel {
   id: Float
   username: String
@@ -168,10 +176,18 @@ input UserInput {
   editors: [EditorInput!]!
 }
 
+input ActivityInput {
+  id: ID!
+  language: String!
+  startDate: String!
+  endDate: String!
+  file: String!
+}
+
 type Query {
   getAPIKey: user!
   getUserProfile: user!
-  getUserCodingActivity(startDate: DateTime!): user!
+  getUserCodingActivity(startDate: String!, endDate: String!): [activity!]!
   updateProfile(input: UpdateProfileInput!): user!
   getProjects: [project!]!
   getProjectDetails(projectId: Float!): project!
@@ -185,11 +201,6 @@ type Query {
   getGoals: [goal!]!
   getLeaderBoards(leaderBoardID: Float!): LeaderBoard!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 input UpdateProfileInput {
   id: ID!

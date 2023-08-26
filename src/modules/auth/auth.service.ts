@@ -9,6 +9,7 @@ import { LoginUserInput } from './dto/login.input';
 import { ResetPasswordInput } from './dto/reset-password.input';
 import { UserService } from '../user/user.service';
 import { generateUniqueRandomString } from '../../utils/random-string.util';
+import User from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -140,5 +141,9 @@ export class AuthService {
   ): Promise<Boolean | undefined> {
     const checked = await bcrypt.compare(passwordPassed, userFoundPassword);
     return checked;
+  }
+
+  async validateUserById(userId: number): Promise<any> {
+    return this.prismaService.user.findUnique({ where: { id: userId } });
   }
 }

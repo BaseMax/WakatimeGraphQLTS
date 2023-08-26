@@ -11,7 +11,7 @@ import * as fs from 'fs';
 export class UserService {
   constructor(private prismaService: PrismaService) {}
 
-  async getAPIKey(user: any): Promise<String> {
+  async getAPIKey(user: any): Promise<User> {
     const id = user.id;
     const userFound = await this.prismaService.user.findUnique({
       where: { id: id },
@@ -19,7 +19,7 @@ export class UserService {
     if (!userFound) {
       throw new BadRequestException('user did not found with this id provided');
     }
-    return userFound.APIKEY;
+    return userFound;
   }
 
   async checkAPIKeyValidity(apiKey: string): Promise<User> {
@@ -87,16 +87,16 @@ export class UserService {
   }
 
   async getUserCodeActivity(
-    startDate: Date,
-    endDate: Date,
+    startDate: string,
+    endDate: string,
     user: any,
   ): Promise<Activity[]> {
     const userFound = await this.findUserById(user.id);
     const activities: Activity[] = await this.prismaService.activity.findMany({
       where: {
         AND: [
-          { startDate: { gte: startDate } },
-          { endDate: { lte: endDate } },
+          { startDate: { gte: new Date(startDate) } },
+          { endDate: { lte: new Date(endDate) } },
           { userId: user.id },
         ],
       },
@@ -127,7 +127,10 @@ export class UserService {
     return userDeleted;
   }
 
-  async updateProfile(input: UpdateProfileInput, user: any) {
+  async updateProfile(
+    input: UpdateProfileInput,
+    user: any,
+  ): Promise<User | null> {
     const userFound = await this.findUserById(user.id);
     const updatedUser = await this.prismaService.user.update({
       where: {

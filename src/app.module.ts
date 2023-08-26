@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
@@ -18,6 +18,7 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { join } from 'path';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { UnitAmountScalar } from './custom-scalars/UnitAmountScalar';
+import { AuthMiddleware } from './modules/auth/auth.middleware';
 import { User } from './modules/user/user.model';
 // import { Group } from './object_types/group';
 
@@ -42,10 +43,17 @@ import { User } from './modules/user/user.model';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      context: ({ req }) => ({ req }),
     }),
     // UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
