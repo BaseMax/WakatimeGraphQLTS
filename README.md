@@ -197,9 +197,11 @@ We welcome contributions to improve and enhance this Wakatime clone. To contribu
 - Create a pull request to the main branch of the original repository.
 - Wait for code review and address any feedback.
 
-## License
+## Contact
 
-This project is licensed under the GPL-3.0 License - see the LICENSE file for details.
+If you have any questions or need further assistance, you can contact the project maintainers.
+
+Feel free to open an issue or submit a pull request! Happy coding!
 
 ## Acknowledgments
 
@@ -207,10 +209,8 @@ Wakatime for inspiring this project and providing valuable insights into develop
 
 The open-source community for their contributions to the technologies used in this project.
 
-## Contact
+## License
 
-If you have any questions or need further assistance, you can contact the project maintainers.
-
-Feel free to open an issue or submit a pull request! Happy coding!
+This project is licensed under the GPL-3.0 License - see the LICENSE file for details.
 
 Copyright 2023, Max Base
