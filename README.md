@@ -223,20 +223,20 @@ Copyright 2023, Max Base
 ## GraphQL
 
 | Query/Mutation        | Description                                 | Screenshot                                         |
-| --------------------- | ------------------------------------------- | -------------------------------------------------- | --- |
+| --------------------- | ------------------------------------------- | -------------------------------------------------- |
 | `sign_up`             | signing up a new user.                      | ![update post](./screenshots/sign_up.jpg)          |
 | `login`               | login a new user.                           | ![update post](./screenshots/login.jpg)            |
 | `logout`              | loging out a user.                          | ![update post](./screenshots/logout.jpg)           |
 | `addMemberToTeam`     | adding a member to a team with ids.         | ![get all tags](./screenshots/addMemberToTeam.jpg) |
 | `add to group`        | add a user to a group.                      | ![get all posts](./screenshots/addToGroup.jpg)     |
 | `createApiKey`        | creating a api key.                         | ![get post by id](./screenshots/createApiKey.jpg)  |
-| `createTeam`          | creating a new team.                        | ![login](./screenshots/createTeam.jpg)             |     |
-| `DeleteApiKey`        | deleting an api key.                        | ![login](./screenshots/DeleteApiKey.jpg)           |     |
-| `getApiKey`           | getting a api key of the logged user.       | ![login](./screenshots/getApiKey.jpg)              |     |
-| `getProjects`         | getting projects of the logged user.        | ![login](./screenshots/getProjects.jpg)            |     |
-| `getTeam`             | getting team of the current logged user.    | ![login](./screenshots/getTeam.jpg)                |     |
-| `getTeams`            | getting teams of the current logged user.   | ![login](./screenshots/GetTeams.jpg)               |     |
-| `getUserProfile`      | getting profile of the current logged user. | ![login](./screenshots/getUserProfile.jpg)         |     |
-| `getusersteams`       | getting all users of a team.                | ![login](./screenshots/getusersteams.jpg)          |     |
-| `trackCodingActivity` | submitting coding activity.                 | ![login](./screenshots/trackCodingActivity.jpg)    |     |
-| `updateTeam`          | updating a team by id.                      | ![login](./screenshots/updateTeam.jpg)             |     |
+| `createTeam`          | creating a new team.                        | ![login](./screenshots/createTeam.jpg)             |
+| `DeleteApiKey`        | deleting an api key.                        | ![login](./screenshots/DeleteApiKey.jpg)           |
+| `getApiKey`           | getting a api key of the logged user.       | ![login](./screenshots/getApiKey.jpg)              |
+| `getProjects`         | getting projects of the logged user.        | ![login](./screenshots/getProjects.jpg)            |
+| `getTeam`             | getting team of the current logged user.    | ![login](./screenshots/getTeam.jpg)                |
+| `getTeams`            | getting teams of the current logged user.   | ![login](./screenshots/GetTeams.jpg)               |
+| `getUserProfile`      | getting profile of the current logged user. | ![login](./screenshots/getUserProfile.jpg)         |
+| `getusersteams`       | getting all users of a team.                | ![login](./screenshots/getusersteams.jpg)          |
+| `trackCodingActivity` | submitting coding activity.                 | ![login](./screenshots/trackCodingActivity.jpg)    |
+| `updateTeam`          | updating a team by id.                      | ![login](./screenshots/updateTeam.jpg)             |
