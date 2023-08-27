@@ -15,7 +15,7 @@ export class TeamResolver {
   }
 
   @Query(() => Team)
-  async getTeam(@Args('input') teamID: number) {
+  async getTeam(@Args('teamID') teamID: number) {
     return await this.teamService.getTeamById(teamID);
   }
 

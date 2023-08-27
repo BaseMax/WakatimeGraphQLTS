@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UserService } from '../user/user.service';
 import { CreateTeamDto, UpdateTeamDto } from './dto';
-import {Team } from '@prisma/client';
+import { Team } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 @Injectable()
 export class TeamService {
@@ -40,17 +40,29 @@ export class TeamService {
     return userFound.teams;
   }
 
-  async createTeam(input: CreateTeamDto, user: any): Promise<Team> {
+  async createTeam(user: any, input: CreateTeamDto): Promise<Team> {
+    const userFound = await this.userService.findUserById(user.id);
+    if (!userFound) {
+      throw new BadRequestException('user did not found with this id');
+    }
     const createdTeam = await this.prismaService.team.create({
       data: {
-        ...input,
+        name: input.name,
+        users: {
+          connect: {
+            id: userFound.id,
+          },
+        },
       },
     });
     return createdTeam;
   }
 
   async updateTeam(input: UpdateTeamDto): Promise<Team> {
-    const team = await this.getTeamById(input.id);
+    const team = await this.getTeamById(Number(input.id));
+    if (!team) {
+      throw new BadRequestException('there is no team with this id');
+    }
     const updatedTeam = await this.prismaService.team.update({
       where: { id: team.id },
       data: {
@@ -62,11 +74,17 @@ export class TeamService {
 
   async addTeamMember(teamID: number, memberID: number): Promise<Team> {
     const team = await this.getTeamById(teamID);
+    if (!team) {
+      throw new BadRequestException('team with this id didnot found');
+    }
     const user = await this.prismaService.user.findUnique({
       where: {
         id: memberID,
       },
     });
+    if (!user) {
+      throw new BadRequestException('user with this id didnot found');
+    }
     const teamUpdated = await this.prismaService.team.update({
       where: {
         id: teamID,
@@ -82,11 +100,7 @@ export class TeamService {
     return teamUpdated;
   }
 
-  async addToGroup(
-    groupID: number,
-    memberID: number,
-    groupStatus: string,
-  ) {
+  async addToGroup(groupID: number, memberID: number, groupStatus: string) {
     const group = await this.prismaService.group.findUnique({
       where: {
         id: groupID,

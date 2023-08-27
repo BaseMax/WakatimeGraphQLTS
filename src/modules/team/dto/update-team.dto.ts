@@ -1,13 +1,20 @@
 import { Field, InputType, ID } from '@nestjs/graphql';
-import { IsOptional, IsString, IsNumber } from 'class-validator';
-import { Type } from 'class-transformer';
-import { User } from '../../../modules/user/user.model';
+import {
+  IsOptional,
+  IsString,
+  IsNumberString,
+  IsNumber,
+} from 'class-validator';
+import { Transform } from 'class-transformer';
 
 @InputType()
 export class UpdateTeamDto {
-  @IsNumber()
+  @IsNumberString()
+  @Transform(({ value }) =>
+    typeof value === 'string' ? parseInt(value, 10) : value,
+  )
   @Field(() => ID)
-  id: number;
+  id: number | string;
 
   @Field()
   @IsString()
@@ -15,7 +22,7 @@ export class UpdateTeamDto {
   name: string;
 
   @Field()
-  @Type(() => Object)
   @IsOptional()
-  user: User;
+  @IsNumber()
+  user: number;
 }

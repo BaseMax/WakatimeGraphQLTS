@@ -903,6 +903,229 @@ describe('AppController (e2e)', () => {
     });
   });
 
+  describe('Team Module', () => {
+    it('should successfuly get all teams', async () => {
+      const get_teams_response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          query {
+            getTeams{
+              id
+              name
+            }
+          }
+        `,
+        });
+      expect(get_teams_response.status).toBe(200);
+      expect(Array.isArray(get_teams_response.body.data.getTeams)).toBe(true);
+    });
+
+    it('should succesffuly create team', async () => {
+      const userRegisterInput = {
+        username: 'lkkm',
+        password: '123321pp',
+        email: 'lkkm@gmail.com',
+        bio: 'this is a bio from lkkm life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const create_team_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          mutation {
+            createTeam(input :{name : "some team"}){
+              id
+              name
+            }
+          }
+        `,
+        });
+      expect(create_team_response.status).toBe(200);
+      expect(create_team_response.body.data.createTeam.name).toBeDefined();
+    });
+
+    it('throw error if team id doesnt exists', async () => {
+      const get_team_response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          query {
+            getTeam(teamID : ${parseInt('1000000')}){
+              id
+              name
+            }
+          }
+        `,
+        });
+      expect(get_team_response.status).toBe(200);
+      expect(get_team_response.body.errors).toBeDefined();
+    });
+
+    it('should succesffuly get users teams', async () => {
+      const userRegisterInput = {
+        username: 'powo',
+        password: '123321pp',
+        email: 'powo@gmail.com',
+        bio: 'this is a bio from powo life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const get_users_teams_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          query {
+            getUsersTeams{
+              id
+              name
+            }
+          }
+        `,
+        });
+      expect(get_users_teams_response.status).toBe(200);
+      expect(
+        Array.isArray(get_users_teams_response.body.data.getUsersTeams),
+      ).toBe(true);
+    });
+
+    it('should succesffuly create team', async () => {
+      const userRegisterInput = {
+        username: 'lwkkm',
+        password: '123321pp',
+        email: 'lkkwm@gmail.com',
+        bio: 'this is a bio from lkkmw life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const create_team_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          mutation {
+            createTeam(input :{name : "some team"}){
+              id
+              name
+            }
+          }
+        `,
+        });
+      expect(create_team_response.status).toBe(200);
+      expect(create_team_response.body.data.createTeam.name).toBeDefined();
+    });
+
+    it('should succesffuly update team', async () => {
+      const userRegisterInput = {
+        username: 'opeooo',
+        password: '123321pp',
+        email: 'opeooo@gmail.com',
+        bio: 'this is a bio from opeooo life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const create_team_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          mutation {
+            createTeam(input :{name : "some team"}){
+              id
+              name
+            }
+          }
+        `,
+        });
+      const teamId = parseInt(create_team_response.body.data.createTeam.id);
+      const update_team_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          mutation {
+            updateTeam(input: {id: ${teamId}, name: "gorila_team", user: 1}){
+              id
+              name
+            }
+          }
+        `,
+        });
+      console.log(
+        'updateteamrespo: ',
+        update_team_response.body.errors[0].extensions,
+      );
+      expect(update_team_response.status).toBe(200);
+      expect(update_team_response.body.data.updateTeam.name).toBeDefined();
+    });
+  });
   afterAll(async () => {
     await prisma.user.deleteMany();
     await app.close();
