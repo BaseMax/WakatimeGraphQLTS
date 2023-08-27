@@ -1393,6 +1393,27 @@ describe('AppController (e2e)', () => {
         get_project_details_response.body.errors[0].extensions,
       ).toBeDefined();
     });
+
+    it('should succesfuly ', async () => {
+      const projectID = '1';
+      const get_project_details_response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          query {
+            getProjectDetails(projectId: ${parseInt(projectID)}){
+              id
+              name
+              totalTime
+            }
+          }
+        `,
+        });
+      expect(get_project_details_response.status).toBe(200);
+      expect(
+        get_project_details_response.body.errors[0].extensions,
+      ).toBeDefined();
+    });
   });
   afterAll(async () => {
     await prisma.user.deleteMany();

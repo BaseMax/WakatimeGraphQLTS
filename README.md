@@ -2,7 +2,6 @@
 
 This project is a Wakatime clone developed as a GraphQL-based webservice using TypeScript and NestJS. It aims to provide time tracking and productivity analysis for developers by integrating with various code editors and providing insightful reports on their coding activity.
 
-
 ## Features
 
 - **User Authentication**: Users can sign up, log in, and manage their accounts. Authentication is required to access certain features and user-specific data.
@@ -113,7 +112,7 @@ type User {
   id: ID!
   username: String!
   email: String!
-  password: String!  # Note: Password should not be returned by queries for security reasons.
+  password: String! # Note: Password should not be returned by queries for security reasons.
   avatar: String
   createdAt: String!
   updatedAt: String!
@@ -170,7 +169,13 @@ type Mutation {
   updateProfile(username: String, email: String, avatar: String): User!
   createAPIKey: APIKey!
   deleteAPIKey(apiKeyID: ID!): Boolean!
-  trackCodingActivity(projectID: ID!, language: String!, file: String!, startTime: String!, endTime: String!): CodingActivity!
+  trackCodingActivity(
+    projectID: ID!
+    language: String!
+    file: String!
+    startTime: String!
+    endTime: String!
+  ): CodingActivity!
   generateReport(startDate: String!, endDate: String!): [CodingActivity!]
   setNotificationPreferences(notifications: [String!]!): User!
   setIntegrationSettings(editor: String!, apiKey: String!): Boolean!
@@ -214,3 +219,15 @@ If you have any questions or need further assistance, you can contact the projec
 Feel free to open an issue or submit a pull request! Happy coding!
 
 Copyright 2023, Max Base
+
+## GraphQL
+
+| Query/Mutation  | Description                              | Screenshot                                           |
+| --------------- | ---------------------------------------- | ---------------------------------------------------- |
+| `likeComment`   | Like a comment.                          | ![update post](./screenshots/likeComment.png)        |
+| `unlikeComment` | Remove a like from a comment.            | ![update post](./screenshots/retriveLikeComment.png) |
+| `updatePost`    | Update an existing blog post.            | ![update post](./screenshots/updatePost.png)         |
+| `getAllTags`    | Get a list of all available tags.        | ![get all tags](./screenshots/getAllPosts.png)       |
+| `getAllPosts`   | Get a list of all blog posts.            | ![get all posts](./screenshots/getAllPosts.png)      |
+| `getPostById`   | Get a single blog post by ID.            | ![get post by id](./screenshots/getPostById.png)     |
+| `login`         | Authenticate a user and receive a token. | ![login](./screenshots/login.                        |
