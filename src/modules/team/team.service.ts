@@ -106,11 +106,17 @@ export class TeamService {
         id: groupID,
       },
     });
+    if (!group) {
+      throw new BadRequestException('group with this id havnt found');
+    }
     const user = await this.prismaService.user.findUnique({
       where: {
         id: memberID,
       },
     });
+    if (!user) {
+      throw new BadRequestException('user with this id did not found');
+    }
     const groupUpdated = await this.prismaService.group.update({
       where: {
         id: groupID,

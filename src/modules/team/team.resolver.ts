@@ -46,7 +46,7 @@ export class TeamResolver {
   async addToGroup(
     @Args('groupID', ParseIntPipe) groupID: number,
     @Args('memberID', ParseIntPipe) memberID: number,
-    @Args('groupStatus', ParseIntPipe) groupStatus: string,
+    @Args('groupStatus') groupStatus: string,
   ) {
     return await this.teamService.addToGroup(groupID, memberID, groupStatus);
   }

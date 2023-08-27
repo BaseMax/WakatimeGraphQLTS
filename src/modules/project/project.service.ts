@@ -6,9 +6,7 @@ import { Project } from '@prisma/client';
 export class ProjectService {
   constructor(private prismaService: PrismaService) {}
 
-  async createProject(input: any) {
-    
-  }
+  async createProject(input: any) {}
 
   async getProjectDetails(projectID: number): Promise<Project> {
     const project: Project = await this.prismaService.project.findUnique({
@@ -16,6 +14,9 @@ export class ProjectService {
         id: projectID,
       },
     });
+    if (!project) {
+      throw new BadRequestException('there was no project with this id');
+    }
     return project;
   }
 

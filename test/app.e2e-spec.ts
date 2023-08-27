@@ -1118,12 +1118,280 @@ describe('AppController (e2e)', () => {
           }
         `,
         });
-      console.log(
-        'updateteamrespo: ',
-        update_team_response.body.errors[0].extensions,
-      );
       expect(update_team_response.status).toBe(200);
       expect(update_team_response.body.data.updateTeam.name).toBeDefined();
+    });
+
+    it('throw error if team ID was incorrect', async () => {
+      const teamID = '999999';
+      const memberID = '1';
+      const add_to_group_response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            addMemberToTeam(teamID: ${parseInt(teamID)} ,memberID : ${parseInt(
+            memberID,
+          )}){
+              id
+              name
+            }
+          }
+        `,
+        });
+      expect(add_to_group_response.status).toBe(200);
+      expect(add_to_group_response.body.errors[0].extensions).toBeDefined();
+    });
+
+    it('throw error if member ID was incorrect', async () => {
+      const teamID = '1';
+      const memberID = '999999';
+      const add_to_group_response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            addMemberToTeam(teamID: ${parseInt(teamID)} ,memberID : ${parseInt(
+            memberID,
+          )}){
+              id
+              name
+            }
+          }
+        `,
+        });
+      expect(add_to_group_response.status).toBe(200);
+      expect(add_to_group_response.body.errors[0].extensions).toBeDefined();
+    });
+
+    it('should successfuly add the member to team with correct ids', async () => {
+      const userRegisterInput = {
+        username: 'newmember',
+        password: '123321pp',
+        email: 'newmember@gmail.com',
+        bio: 'this is a bio from newmember life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const memberID = response.body.data.signUp.id;
+      const create_team_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          mutation {
+            createTeam(input :{name : "some team"}){
+              id
+              name
+            }
+          }
+        `,
+        });
+      const teamID = create_team_response.body.data.createTeam.id;
+      const add_to_group_response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            addMemberToTeam(teamID: ${parseInt(teamID)} ,memberID : ${parseInt(
+            memberID,
+          )}){
+              id
+              name
+            }
+          }
+        `,
+        });
+      expect(add_to_group_response.status).toBe(200);
+      expect(
+        add_to_group_response.body.data.addMemberToTeam.name,
+      ).toBeDefined();
+    });
+
+    it('throw error if group ID was incorrect', async () => {
+      const teamID = '999999';
+      const memberID = '1';
+      const add_to_group_response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            addToGroup(groupID: ${parseInt(teamID)}, memberID: ${parseInt(
+            memberID,
+          )}, groupStatus: "inviteOnly"){
+              id
+              name
+            }
+          }
+        `,
+        });
+      expect(add_to_group_response.status).toBe(200);
+      expect(add_to_group_response.body.errors[0].extensions).toBeDefined();
+    });
+
+    it('throw error if member ID was incorrect', async () => {
+      const teamID = '1';
+      const memberID = '999999';
+      const add_to_group_response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            addToGroup(groupID: ${parseInt(teamID)}, memberID: ${parseInt(
+            memberID,
+          )}, groupStatus: "inviteOnly"){
+              id
+              name
+            }
+          }
+        `,
+        });
+      expect(add_to_group_response.status).toBe(200);
+      expect(add_to_group_response.body.errors[0].extensions).toBeDefined();
+    });
+
+    it('should successfuly add the member to group with correct both ids', async () => {
+      // const userRegisterInput = {
+      //   username: 'newmember',
+      //   password: '123321pp',
+      //   email: 'newmember@gmail.com',
+      //   bio: 'this is a bio from newmember life is much cooler than it seems',
+      // };
+      // const response = await request(app.getHttpServer())
+      //   .post(gql)
+      //   .send({
+      //     query: `
+      //     mutation {
+      //       signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+      //           id
+      //           username
+      //           userAtId
+      //           bio
+      //           token
+      //           avatar
+      //           notificationStatus
+      //       }
+      //     }
+      //   `,
+      //   });
+      // const authToken = response.body.data.signUp.token;
+      // const memberID = response.body.data.signUp.id;
+      // const create_team_response = await request(app.getHttpServer())
+      //   .post(gql)
+      //   .set('Authorization', `Bearer ${authToken}`)
+      //   .send({
+      //     query: `
+      //     mutation {
+      //       createTeam(input :{name : "some team"}){
+      //         id
+      //         name
+      //       }
+      //     }
+      //   `,
+      //   });
+      // const teamID = create_team_response.body.data.createTeam.id;
+      // const add_to_group_response = await request(app.getHttpServer())
+      //   .post(gql)
+      //   .send({
+      //     query: `
+      //     mutation {
+      //       addMemberToTeam(teamID: ${parseInt(teamID)} ,memberID : ${parseInt(
+      //       memberID,
+      //     )}){
+      //         id
+      //         name
+      //       }
+      //     }
+      //   `,
+      //   });
+      // expect(add_to_group_response.status).toBe(200);
+      // expect(
+      //   add_to_group_response.body.data.addMemberToTeam.name,
+      // ).toBeDefined();
+    });
+  });
+
+  describe('Project Module', () => {
+    it('should successfuly get projects', async () => {
+      const userRegisterInput = {
+        username: 'paul',
+        password: '123321pp',
+        email: 'paul@gmail.com',
+        bio: 'this is a bio from paul life is much cooler than it seems',
+      };
+      const response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          mutation {
+            signUp(input:{username: "${userRegisterInput.username}", password: "${userRegisterInput.password}", bio: "${userRegisterInput.bio}", email: "${userRegisterInput.email}"}) {
+                id
+                username    
+                userAtId
+                bio
+                token
+                avatar
+                notificationStatus
+            }
+          }
+        `,
+        });
+      const authToken = response.body.data.signUp.token;
+      const get_projects_response = await request(app.getHttpServer())
+        .post(gql)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          query: `
+          query {
+            getProjects{
+              id
+              name
+              totalTime
+            }
+          }
+        `,
+        });
+      expect(get_projects_response.status).toBe(200);
+      expect(Array.isArray(get_projects_response.body.data.getProjects)).toBe(
+        true,
+      );
+    });
+
+    it('throw error if project ID was incorrect for getting details', async () => {
+      const projectID = '1';
+      const get_project_details_response = await request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query: `
+          query {
+            getProjectDetails(projectId: ${parseInt(projectID)}){
+              id
+              name
+              totalTime
+            }
+          }
+        `,
+        });
+      expect(get_project_details_response.status).toBe(200);
+      expect(
+        get_project_details_response.body.errors[0].extensions,
+      ).toBeDefined();
     });
   });
   afterAll(async () => {
