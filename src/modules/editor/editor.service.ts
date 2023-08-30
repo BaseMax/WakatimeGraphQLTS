@@ -9,7 +9,7 @@ export class EditorService {
     private userService: UserService,
   ) {}
   async getEditorData(editorId: number) {
-    // a data set for editor
+    
   }
 
   async getEditorDataByDate(editorId: number, date: string) {

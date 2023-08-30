@@ -11,7 +11,7 @@ export class LeaderboardsResolver {
   constructor(private leaderService: LeaderboardsService) {}
 
   @Query(() => LeaderBoard)
-  async getLeaderBoards(
+  async getLeaderBoard(
     @Args('leaderBoardID', ParseIntPipe) leaderBoardID: number,
   ) {
     return await this.leaderService.getLeaderBoard(leaderBoardID);

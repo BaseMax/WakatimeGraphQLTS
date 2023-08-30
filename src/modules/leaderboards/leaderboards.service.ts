@@ -1,4 +1,8 @@
-import { BadGatewayException, Injectable } from '@nestjs/common';
+import {
+  BadGatewayException,
+  BadRequestException,
+  Injectable,
+} from '@nestjs/common';
 import { LeaderBoard } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import {
@@ -23,7 +27,10 @@ export class LeaderboardsService {
     }
     return leaderBoardFound;
   }
-  async createLeaderBoard(input: CreateLeaderBoardInput, user: any) {
+  async createLeaderBoard(
+    input: CreateLeaderBoardInput,
+    user: any,
+  ): Promise<LeaderBoard> {
     const leaderBoardCreated = await this.prismaService.leaderBoard.create({
       data: {
         ...input,
@@ -38,13 +45,17 @@ export class LeaderboardsService {
   }
 
   async udpateLeaderBoard(input: UpdateLeaderBoardInput): Promise<LeaderBoard> {
-    const leaderBoardFound = await this.getLeaderBoardByID(input.id);
+    const leaderBoardFound = await this.getLeaderBoardByID(Number(input.id));
+    if (!leaderBoardFound) {
+      throw new BadRequestException('leader board was not found');
+    }
+    const { id, ...data } = input;
     const updatedLeaderBoard = await this.prismaService.leaderBoard.update({
       where: {
-        id: input.id,
+        id: Number(input.id),
       },
       data: {
-        ...input,
+        ...data,
       },
     });
     return updatedLeaderBoard;

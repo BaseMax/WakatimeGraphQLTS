@@ -44,11 +44,11 @@ export class GoalService {
   }
 
   async updateGoal(input: UpdateGoalDto): Promise<Goal> {
-    const foundGoal = await this.findGoalById(input.id);
+    const foundGoal = await this.findGoalById(Number(input.id));
     const { id, ...restInput } = input;
     const updatedGoal = await this.prismaService.goal.update({
       where: {
-        id: input.id,
+        id: Number(input.id),
       },
       data: {
         ...restInput,
@@ -70,6 +70,7 @@ export class GoalService {
   }
 
   async deleteGoal(goalID: number): Promise<Goal> {
+    const foundGoal = await this.findGoalById(goalID);
     const deletedGoal = await this.prismaService.goal.delete({
       where: {
         id: goalID,

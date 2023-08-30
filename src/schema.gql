@@ -198,7 +198,7 @@ type Query {
   getUsersTeams: [team!]!
   getGoal(goalID: Float!): goal!
   getGoals: [goal!]!
-  getLeaderBoards(leaderBoardID: Float!): LeaderBoard!
+  getLeaderBoard(leaderBoardID: Float!): LeaderBoard!
 }
 
 type Mutation {
@@ -275,6 +275,11 @@ input CreateGoalDto {
 
 input UpdateGoalDto {
   id: ID!
+  name: String!
+  amount: String!
+  unitAmount: String!
+  perEachUnit: String!
+  ignoreDaysWithNoCode: Boolean!
 }
 
 input CreateLeaderBoardInput {
