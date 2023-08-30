@@ -45,7 +45,7 @@ type group {
 type team {
   id: ID!
   name: String!
-  group: group!
+  groups: group!
   user: user!
 }
 
@@ -150,7 +150,7 @@ input GroupInput {
 input TeamInput {
   id: ID!
   name: String!
-  group: GroupInput!
+  groups: GroupInput!
   user: UserInput!
 }
 
@@ -188,6 +188,7 @@ type Query {
   getAPIKey: user!
   getUserProfile: user!
   getUserCodingActivity(startDate: String!, endDate: String!): [activity!]!
+  checkAPIKeyValidity(APIKey: String!): user!
   getProjects: [project!]!
   getProjectDetails(projectId: Float!): project!
   getUsersProjects: [project!]!

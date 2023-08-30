@@ -33,6 +33,15 @@ export class UserResolver {
   }
 
   @UseGuards(AuthGuard)
+  @Query(() => User)
+  async checkAPIKeyValidity(
+    @Args('APIKey') APIKey: string,
+    @GqlUser() user: any,
+  ) {
+    return await this.userService.checkAPIKeyValidity(APIKey, user);
+  }
+
+  @UseGuards(AuthGuard)
   @Mutation(() => User)
   async updateProfile(
     @Args('input') input: UpdateProfileInput,

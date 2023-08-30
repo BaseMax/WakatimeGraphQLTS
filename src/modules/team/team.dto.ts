@@ -17,7 +17,7 @@ export class Team {
   @Field((type) => Group)
   @Type(() => Object)
   @IsOptional()
-  group: Group;
+  groups: Group;
 
   @Field((type) => User)
   @Type(() => Object)

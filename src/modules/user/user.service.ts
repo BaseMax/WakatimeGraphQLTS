@@ -22,7 +22,15 @@ export class UserService {
     return userFound;
   }
 
-  async checkAPIKeyValidity(apiKey: string): Promise<User> {
+  async checkAPIKeyValidity(apiKey: string, user: any): Promise<User> {
+    const userFound = await this.prismaService.user.findUnique({
+      where: {
+        id: user.id,
+      },
+    });
+    if (!userFound) {
+      throw new BadRequestException('user with this id didnot found');
+    }
     const userWithThisAPI = await this.prismaService.user.findUnique({
       where: {
         APIKEY: apiKey,

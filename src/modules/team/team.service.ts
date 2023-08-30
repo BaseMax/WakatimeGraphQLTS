@@ -34,7 +34,11 @@ export class TeamService {
         id: user.id,
       },
       include: {
-        teams: true,
+        teams: {
+          include: {
+            groups: true,
+          },
+        },
       },
     });
     return userFound.teams;
@@ -72,7 +76,7 @@ export class TeamService {
     return updatedTeam;
   }
 
-  async addTeamMember(teamID: number, memberID: number): Promise<Team> {  
+  async addTeamMember(teamID: number, memberID: number): Promise<Team> {
     const team = await this.getTeamById(teamID);
     if (!team) {
       throw new BadRequestException('team with this id didnot found');
