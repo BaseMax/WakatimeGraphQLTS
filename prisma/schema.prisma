@@ -57,7 +57,7 @@ model Activity {
 model Project {
   id          Int        @id @default(autoincrement())
   name        String
-  totalTime   String
+  totalTime   String     @default("0")
   languages   Language[]
   editors     Editor[]   @relation("EditorsProjects")
   User        User?      @relation(fields: [userId], references: [id])

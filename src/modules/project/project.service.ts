@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Project } from '@prisma/client';
-
+import { CreateProjectInput } from './dto';
 @Injectable()
 export class ProjectService {
   constructor(private prismaService: PrismaService) {}
@@ -23,6 +23,19 @@ export class ProjectService {
   async getProjects(): Promise<Project[]> {
     const projects = await this.prismaService.project.findMany();
     return projects;
+  }
+
+  async createProejct(input: CreateProjectInput): Promise<Project> {
+    const { userId, ...data } = input;
+    const createProject = await this.prismaService.project.create({
+      data: {
+        ...data,
+        User: {
+          connect: { id: input.userId },
+        },
+      },
+    });
+    return createProject;
   }
 
   async getUsersProjects(user: any): Promise<Project[]> {

@@ -209,7 +209,8 @@ type Mutation {
   updateProfile(input: UpdateProfileInput!): user!
   createAPIKey: user!
   deleteAPIKey(apiKEYID: String!): user!
-  trackCodingActivity(projectID: Float!, language: String!, file: String!, startTime: String!, endTime: String!): user!
+  trackCodingActivity(projectID: Float!, language: String!, file: String!, startTime: String!, endTime: String!): activity!
+  createProject(input: CreateProjectInput!): project!
   deleteProject(projectID: Float!): project!
   createTeam(input: CreateTeamDto!): team!
   updateTeam(input: UpdateTeamDto!): team!
@@ -247,6 +248,11 @@ input UpdateProfileInput {
   id: ID!
   username: String!
   bio: String!
+}
+
+input CreateProjectInput {
+  name: String!
+  userId: Float!
 }
 
 input CreateTeamDto {

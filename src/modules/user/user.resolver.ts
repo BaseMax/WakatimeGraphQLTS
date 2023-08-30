@@ -54,14 +54,14 @@ export class UserResolver {
   }
 
   @UseGuards(AuthGuard)
-  @Mutation(() => User)
+  @Mutation(() => Activity)
   async trackCodingActivity(
     @Args('projectID') projectID: number,
     @Args('language') language: string,
     @Args('file') file: string,
     @Args('startTime') startTime: string,
     @Args('endTime') endTime: string,
-    @GqlUser() user: any, 
+    @GqlUser() user: any,
   ) {
     return await this.userService.trackCodingActivity(
       projectID,
