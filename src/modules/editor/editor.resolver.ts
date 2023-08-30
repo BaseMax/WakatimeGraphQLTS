@@ -1,5 +1,6 @@
 import { ParseIntPipe } from '@nestjs/common';
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { CreateEditroInput, UpdateEditroInput } from './dto';
 import { Editor } from './editor.model';
 import { EditorService } from './editor.service';
 
@@ -18,5 +19,15 @@ export class EditorResolver {
     @Args('date') date: string,
   ) {
     return await this.editorService.getEditorDataByDate(editorId, date);
+  }
+
+  @Mutation(() => Editor)
+  async createEditor(@Args('input') input: CreateEditroInput) {
+    return await this.editorService.createEditor(input);
+  }
+
+  @Mutation(() => Editor)
+  async updateEditor(@Args('input') input: UpdateEditroInput) {
+    return await this.editorService.updateEditor(input);
   }
 }

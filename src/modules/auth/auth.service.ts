@@ -10,6 +10,7 @@ import { ResetPasswordInput } from './dto/reset-password.input';
 import { UserService } from '../user/user.service';
 import { generateUniqueRandomString } from '../../utils/random-string.util';
 import User from '@prisma/client';
+import { ForgotPasswordInput } from './dto/forgot_password.dto';
 
 @Injectable()
 export class AuthService {
@@ -119,6 +120,10 @@ export class AuthService {
     const token = await this.assignToken(userRecovery);
     delete userRecovery.password;
     return { userRecovery, token };
+  }
+
+  async forgotPassword(input: ForgotPasswordInput){
+    
   }
 
   async hashingPassword(password: string): Promise<string> {

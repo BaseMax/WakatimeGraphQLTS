@@ -206,12 +206,15 @@ type Mutation {
   userLogin(input: LoginUserInput!): AuthModel!
   userLogOut(id: Float!): AuthModel!
   ResetPassword(input: ResetPasswordInput!): AuthModel!
+  ForgotPassword(input: ForgotPasswordInput!): AuthModel!
   updateProfile(input: UpdateProfileInput!): user!
   createAPIKey: user!
   deleteAPIKey(apiKEYID: String!): user!
   trackCodingActivity(projectID: Float!, language: String!, file: String!, startTime: String!, endTime: String!): activity!
   createProject(input: CreateProjectInput!): project!
   deleteProject(projectID: Float!): project!
+  createEditor(input: CreateEditroInput!): editor!
+  updateEditor(input: UpdateEditroInput!): editor!
   createTeam(input: CreateTeamDto!): team!
   updateTeam(input: UpdateTeamDto!): team!
   addMemberToTeam(teamID: Float!, memberID: Float!): team!
@@ -244,6 +247,11 @@ input ResetPasswordInput {
   passwordConfirm: String!
 }
 
+input ForgotPasswordInput {
+  username: String!
+  email: String!
+}
+
 input UpdateProfileInput {
   id: ID!
   username: String!
@@ -253,6 +261,17 @@ input UpdateProfileInput {
 input CreateProjectInput {
   name: String!
   userId: Float!
+}
+
+input CreateEditroInput {
+  name: String!
+  userId: Float!
+}
+
+input UpdateEditroInput {
+  id: ID!
+  name: String!
+  projectID: Float!
 }
 
 input CreateTeamDto {

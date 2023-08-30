@@ -5,6 +5,7 @@ import { LoginUserInput } from './dto/login.input';
 import { ResetPasswordInput } from './dto/reset-password.input';
 import { AuthModel } from './auth.model';
 import { HttpException } from '@nestjs/common';
+import { ForgotPasswordInput } from './dto/forgot_password.dto';
 
 @Resolver(() => AuthModel)
 export class AuthResolver {
@@ -45,5 +46,13 @@ export class AuthResolver {
     const { userRecovery, token } = await this.service.resetPassword(input);
     ctx.req.user = userRecovery;
     return { ...userRecovery, token };
+  }
+
+  @Mutation(() => AuthModel)
+  async ForgotPassword(
+    @Context() ctx: any,
+    @Args('input') input: ForgotPasswordInput,
+  ) {
+    return await this.service.forgotPassword(input);
   }
 }
