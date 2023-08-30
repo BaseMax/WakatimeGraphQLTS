@@ -89,6 +89,34 @@ export class LeaderboardsService {
     return updatedLeaderBoard;
   }
 
+  async leaveLeaderBoard(
+    user: any,
+    leaderBoardID: number,
+  ): Promise<LeaderBoard> {
+    const userFound = await this.prismaService.user.findUnique({
+      where: {
+        id: user.id,
+      },
+    });
+    if (!userFound) {
+      throw new BadGatewayException('there is no user with this id');
+    }
+    const leaderBoardFound = await this.getLeaderBoardByID(leaderBoardID);
+    const updatedLeaderBoard = await this.prismaService.leaderBoard.update({
+      where: {
+        id: leaderBoardID,
+      },
+      data: {
+        users: {
+          disconnect: {
+            id: user.id,
+          },
+        },
+      },
+    });
+    return updatedLeaderBoard;
+  }
+
   async getLeaderBoardByID(leaderBoardID: number) {
     const leaderBoard = await this.prismaService.leaderBoard.findUnique({
       where: {

@@ -40,4 +40,12 @@ export class LeaderboardsResolver {
   ) {
     return await this.leaderService.joinLeaderBoard(user, leaderBoardID);
   }
+
+  @Mutation(() => LeaderBoard)
+  async leaveLeaderBoard(
+    @GqlUser() user: any,
+    @Args('leaderBoardID', ParseIntPipe) leaderBoardID: number,
+  ) {
+    return await this.leaderService.leaveLeaderBoard(user, leaderBoardID);
+  }
 }

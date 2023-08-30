@@ -81,4 +81,13 @@ export class UserResolver {
       user,
     );
   }
+
+  @UseGuards(AuthGuard)
+  @Mutation(() => User)
+  async deleteAccount(
+    @Args('password') password: string,
+    @GqlUser() user: any,
+  ) {
+    return await this.userService.deleteAccount(password, user);
+  }
 }

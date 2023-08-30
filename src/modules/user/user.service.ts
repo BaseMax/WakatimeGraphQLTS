@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { Activity, Project, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { UpdateProfileInput } from './dto/updateProfile.dto';
 import { resolve } from 'path';
@@ -130,9 +130,13 @@ export class UserService {
     if (!checked) {
       throw new BadRequestException('password provided was incorrect');
     }
+
     const userDeleted = await this.prismaService.user.delete({
       where: {
         id: id,
+      },
+      include: {
+        Goal: true,
       },
     });
     return userDeleted;

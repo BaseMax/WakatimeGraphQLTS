@@ -212,6 +212,8 @@ type Mutation {
   createAPIKey: user!
   deleteAPIKey(apiKEYID: String!): user!
   trackCodingActivity(projectID: Float!, language: String!, file: String!, startTime: String!, endTime: String!): activity!
+  deleteAccount(password: String!): user!
+  setNotificationPreferences(input: NotificationPreferenceDTO!): user!
   createProject(input: CreateProjectInput!): project!
   deleteProject(projectID: Float!): project!
   createEditor(input: CreateEditroInput!): editor!
@@ -226,6 +228,7 @@ type Mutation {
   createLeaderBoard(input: CreateLeaderBoardInput!): LeaderBoard!
   updateLeaderBoard(input: UpdateLeaderBoardInput!): LeaderBoard!
   joinLeaderBoard(leaderBoardID: Float!): LeaderBoard!
+  leaveLeaderBoard(leaderBoardID: Float!): LeaderBoard!
 }
 
 input RegistrationUserInput {
@@ -257,6 +260,13 @@ input UpdateProfileInput {
   id: ID!
   username: String!
   bio: String!
+}
+
+input NotificationPreferenceDTO {
+  notificationsType: [String!]!
+  notificationDisturbHours: [String!]!
+  notificationStatus: String!
+  userId: ID!
 }
 
 input CreateProjectInput {
