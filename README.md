@@ -73,7 +73,12 @@ The webservice will be accessible at `http://localhost:<PORT>/graphql`, where `<
 - `checkAPIKeyValidity(apiKey: String!)` - Check the validity of an API key.
 - `getEditorData(editorID: ID!)` - Get data from a specific code editor.
 - `getEditorDataByDate(editorID: ID!, date: String!)` - Get data from a specific code editor for a particular date.
-
+- `getTeam(teamID: ID!)` -get data of the team.
+- `getTeams` -getting all the teams in system.
+- `getUserTeams` - getting all teams that user joind.
+- `getLeaderBoard` - getting information of leaderboard.
+- `getGoal(goalID: ID!)` - getting a goal information with id.
+-  `getGoals` -gettting goals of system.
 **Mutations:**
 
 - `signUp(username: String!, email: String!, password: String!)` - Register a new user.
@@ -90,7 +95,18 @@ The webservice will be accessible at `http://localhost:<PORT>/graphql`, where `<
 - `leaveLeaderboard` - Leave the coding activity leaderboard.
 - `submitFeedback(subject: String!, message: String!)` - Submit feedback to the administrators.
 - `deleteAccount(password: String!)` - Delete the authenticated user's account (requires password confirmation).
-
+- `createTeam(input: CreateTeamInput!)` - creating a new team in system.
+- `updateTeam(input : UpdateTeamInput!)` - updating an existing team in system.
+- `addMembersToTeam(teamID : ID! , memberID: ID!)`- adding a member to team.
+- `addToGroup(groupID : ID! , memberID : ID! , groupStatus: string!)` - adding a member to group.
+- `createProject(input: CreateProjectInput!)` - creating new project and assign it to a existing user in system.
+- `createLeaderBoard(input : CreateLeaderBoadrInput!)` - creating leaderboard .
+- `updateLeaderBoard(input: UpdateLeaderBoardInput!)` -updating a leaderboard with provided id and add members to it.
+- `createGoal(input : CreateGoalInput!)` -creating a goal.
+- `updateGoal(input : UpdateGoalInput!)`- updating goal with id.
+- `deleteGoaol(goalID : ID!)` -deleting goal with id.
+- `createEditor(input : CreateEditorInput!)`- creating a new editor.
+- `updateEditor(input : UpdateEditorInput!)`- update a editor by id.
 ### Editor-related Mutations:
 
 - `saveEditorData(editorID: ID!, data: JSON!)` - Save editor data in the database for a specific code editor.
