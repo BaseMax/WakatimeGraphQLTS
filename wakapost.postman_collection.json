@@ -1,0 +1,1330 @@
+{
+	"info": {
+		"_postman_id": "c5c6914d-fc11-4317-bbd0-c07896c6fb1f",
+		"name": "wakapost",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9686341",
+		"_collection_link": "https://warped-shuttle-923209.postman.co/workspace/New-Team-Workspace~a6209e35-c7fc-4376-b0b0-c1b4b10524ec/collection/9686341-c5c6914d-fc11-4317-bbd0-c07896c6fb1f?action=share&source=collection_link&creator=9686341"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation SignUp {\r\n    signUp(\r\n        input: {username: \"parham3\", password: \"123321pp\", bio: \"this is my final thoughts on your bio\", email: \"parham3@gmail.com\"}\r\n    ) {\r\n        id\r\n        username\r\n        userAtId\r\n        bio\r\n        token\r\n        avatar\r\n        notificationStatus\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteAccount",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation DeleteAccount {\r\n    deleteAccount(password: \"9p9p9p\") {\r\n        id\r\n        username\r\n        userAtId\r\n        password\r\n        bio\r\n        notificationStatus\r\n        email\r\n        APIKEY\r\n        notificationsType\r\n        notificationDisturbHour\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UserLogin {\r\n    userLogin(\r\n        input: {username: \"mrpooya\", password: \"123321pp\", email: \"mrpooya@gmail.com\"}\r\n    ) {\r\n        id\r\n        username\r\n        userAtId\r\n        bio\r\n        notificationStatus\r\n        token\r\n        avatar\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UserLogOut {\r\n    userLogOut(id: 1365) {\r\n        id\r\n        username\r\n        userAtId\r\n        bio\r\n        notificationStatus\r\n        token\r\n        avatar\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ressetpassword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ResetPassword {\r\n    ResetPassword(\r\n        input: {username: \"mrpooya\", oldPassword: \"123321pp\", newPassword: \"9p9p9p\", passwordConfirm: \"9p9p9p\"}\r\n    ) {\r\n        id\r\n        username\r\n        userAtId\r\n        bio\r\n        notificationStatus\r\n        token\r\n        avatar\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getApiKey",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetAPIKey {\r\n    getAPIKey {\r\n        id\r\n        username\r\n        userAtId\r\n        password\r\n        bio\r\n        notificationStatus\r\n        email\r\n        APIKEY\r\n        notificationsType\r\n        notificationDisturbHour\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "checkAPIValidity",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query CheckAPIKeyValidity {\r\n    checkAPIKeyValidity(APIKey: \"03e9a4d8-870a-4972-8776-6672206e0fe9\") {\r\n        id\r\n        username\r\n        userAtId\r\n        password\r\n        bio\r\n        notificationStatus\r\n        email\r\n        APIKEY\r\n        notificationsType\r\n        notificationDisturbHour\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserProfile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetAPIKey {\r\n    getUserProfile {\r\n        id\r\n        username\r\n        userAtId\r\n        password\r\n        bio\r\n        notificationStatus\r\n        email\r\n        APIKEY\r\n        notificationsType\r\n        notificationDisturbHour\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUserProfile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdateProfile {\r\n    updateProfile(input: {id: \"1365\", username: \"mrpooya\", bio: \"this is mol\"}) {\r\n        id\r\n        username\r\n        userAtId\r\n        password\r\n        bio\r\n        notificationStatus\r\n        email\r\n        APIKEY\r\n        notificationsType\r\n        notificationDisturbHour\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setUserNotificationPreference",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation SetNotificationPreferences {\r\n    setNotificationPreferences(\r\n        input: {notificationsType: \"wef\", notificationDisturbHours: \"awef\", notificationStatus: \"awef\", userId: \"1365\"}\r\n    ) {\r\n        id\r\n        username\r\n        userAtId\r\n        password\r\n        bio\r\n        notificationStatus\r\n        email\r\n        APIKEY\r\n        notificationsType\r\n        notificationDisturbHour\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createAPIKey",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateAPIKey {\r\n    createAPIKey {\r\n        id\r\n        username\r\n        userAtId\r\n        password\r\n        bio\r\n        notificationStatus\r\n        email\r\n        APIKEY\r\n        notificationsType\r\n        notificationDisturbHour\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteAPIKey",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation DeleteAPIKey {\r\n    deleteAPIKey(apiKEYID: \"d9243f66-ccf1-4ed9-8286-a53e96681904\") {\r\n        id\r\n        username\r\n        userAtId\r\n        password\r\n        bio\r\n        notificationStatus\r\n        email\r\n        APIKEY\r\n        notificationsType\r\n        notificationDisturbHour\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "trackCodingActivity",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation TrackCodingActivity {\r\n    trackCodingActivity(\r\n        projectID: 1\r\n        language: \"typescript\"\r\n        file: \"auth.ts\"\r\n        startTime: \"2023-08-30T10:15:30.123Z\"\r\n        endTime: \"2023-08-30T10:15:33.123Z\"\r\n    ) {\r\n        id\r\n        language\r\n        startDate\r\n        endDate\r\n        file\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserCodingActivity",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetUserCodingActivity {\r\n    getUserCodingActivity(\r\n        startDate: \"2023-08-30T10:02:16.179Z\"\r\n        endDate: \"2023-08-30T23:02:16.179Z\"\r\n    ) {\r\n        id\r\n        language\r\n        startDate\r\n        endDate\r\n        file\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTeams",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetTeams {\r\n    getTeams {\r\n        id\r\n        name\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTeam",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetTeam {\r\n    getTeam(teamID: 1) {\r\n        id\r\n        name\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createTeam",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateTeam {\r\n    createTeam(input: {name: \"azres\"}) {\r\n        id\r\n        name\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUsersTeam",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetUsersTeams {\r\n    getUsersTeams {\r\n        id\r\n        name\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateTeam",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdateTeam {\r\n    updateTeam(input: {id: \"140\", name: \"pooya\", user: 1}) {\r\n        id\r\n        name\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addMembersToTeam",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation AddMemberToTeam {\r\n    addMemberToTeam(teamID: 1, memberID: 1361) {\r\n        id\r\n        name\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addToGroup",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation AddToGroup {\r\n    addToGroup(groupID: 1, memberID: 1, groupStatus: \"inviteOnly\") {\r\n        id\r\n        name\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProjects",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetProjects {\r\n    getProjects {\r\n        id\r\n        name\r\n        totalTime\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProject",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateProject {\r\n    createProject(input: {name: \"wakatime\", userId: 1365}) {\r\n        id\r\n        name\r\n        totalTime\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProjectDetails",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetProjectDetails {\r\n    getProjectDetails(projectId: 1) {\r\n        id\r\n        name\r\n        totalTime\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLeaderBoard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetLeaderBoard {\r\n    getLeaderBoard(leaderBoardID: 1) {\r\n        id\r\n        plan\r\n        billingCycle\r\n        paymant\r\n        coupon\r\n        extraInfo\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createLeaderBoard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateLeaderBoard {\r\n    createLeaderBoard(\r\n        input: {name: \"myleaderboard\", plan: \"monthly\", billingCycle: \"monthly\", paymant: \"paypal\", coupon: \"none\", extraInfo: \"none\"}\r\n    ) {\r\n        id\r\n        plan\r\n        billingCycle\r\n        paymant\r\n        coupon\r\n        extraInfo\r\n    }\r\n}\r\n\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateLeaderBoard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdateLeaderBoard {\r\n    updateLeaderBoard(\r\n        input: {id: 1, plan: \"adsf\", name: \"asdf\", billingCycle: \"asdf\", paymant: \"asdf\", coupon: \"asdf\", extraInfo: \"asdf\"}\r\n    ) {\r\n        id\r\n        plan\r\n        billingCycle\r\n        paymant\r\n        coupon\r\n        extraInfo\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "joinLeaderBoard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation JoinLeaderBoard {\r\n    joinLeaderBoard(leaderBoardID: 1) {\r\n        id\r\n        plan\r\n        billingCycle\r\n        paymant\r\n        coupon\r\n        extraInfo\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "leaveLeaderBoard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation LeaveLeaderBoard {\r\n    leaveLeaderBoard(leaderBoardID: 1) {\r\n        id\r\n        plan\r\n        billingCycle\r\n        paymant\r\n        coupon\r\n        extraInfo\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getGoal",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetGoal {\r\n    getGoal(goalID: 1) {\r\n        id\r\n        name\r\n        amount\r\n        unitAmount\r\n        perEachUnit\r\n        ignoreDaysWithNoCode\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getGoals",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetGoals {\r\n    getGoals {\r\n        id\r\n        name\r\n        amount\r\n        unitAmount\r\n        perEachUnit\r\n        ignoreDaysWithNoCode\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createGoal",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateGoal {\r\n    createGoal(\r\n        input: {name: \"asdf\", amount: \"asdf\", unitAmount: \"asdf\", perEachUnit: \"asdf\", ignoreDaysWithNoCode: true}\r\n    ) {\r\n        id\r\n        name\r\n        amount\r\n        unitAmount\r\n        perEachUnit\r\n        ignoreDaysWithNoCode\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateGoal",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdateGoal {\r\n    updateGoal(\r\n        input: {id: \"1\", name: \"asdf\", amount: \"asdf\", unitAmount: \"asdf\", perEachUnit: \"asdf\", ignoreDaysWithNoCode: true}\r\n    ) {\r\n        id\r\n        name\r\n        amount\r\n        unitAmount\r\n        perEachUnit\r\n        ignoreDaysWithNoCode\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteGoal",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation DeleteGoal {\r\n    deleteGoal(goalID: 1) {\r\n        id\r\n        name\r\n        amount\r\n        unitAmount\r\n        perEachUnit\r\n        ignoreDaysWithNoCode\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createEditor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateEditor {\r\n    createEditor(input: {name: \"edit\", userId: 1365}) {\r\n        id\r\n        name\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateEditor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdateEditor {\r\n    updateEditor(input: {id: \"1\", name: \"weewr\", projectID: 2}) {\r\n        id\r\n        name\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEditorData",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM2NSwidXNlcm5hbWUiOiJtcnBvb3lhIiwiaWF0IjoxNjkzMzkxMDc3LCJleHAiOjE2OTM0Nzc0Nzd9.YLJUsPvSqOiU0b57CnjP0jhqx6lY2ne3MRSKosYl59Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetEditorData {\r\n    getEditorData(editorId: 1) {\r\n        id\r\n        name\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
