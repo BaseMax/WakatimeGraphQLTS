@@ -78,8 +78,8 @@ The webservice will be accessible at `http://localhost:<PORT>/graphql`, where `<
 - `getUserTeams` - getting all teams that user joind.
 - `getLeaderBoard` - getting information of leaderboard.
 - `getGoal(goalID: ID!)` - getting a goal information with id.
--  `getGoals` -gettting goals of system.
-**Mutations:**
+- `getGoals` -gettting goals of system.
+  **Mutations:**
 
 - `signUp(username: String!, email: String!, password: String!)` - Register a new user.
 - `logIn(email: String!, password: String!)` - Log in an existing user.
@@ -107,6 +107,7 @@ The webservice will be accessible at `http://localhost:<PORT>/graphql`, where `<
 - `deleteGoaol(goalID : ID!)` -deleting goal with id.
 - `createEditor(input : CreateEditorInput!)`- creating a new editor.
 - `updateEditor(input : UpdateEditorInput!)`- update a editor by id.
+
 ### Editor-related Mutations:
 
 - `saveEditorData(editorID: ID!, data: JSON!)` - Save editor data in the database for a specific code editor.
@@ -238,21 +239,40 @@ Copyright 2023, Max Base
 
 ## GraphQL
 
-| Query/Mutation        | Description                                 | Screenshot                                         |
-| --------------------- | ------------------------------------------- | -------------------------------------------------- |
-| `sign_up`             | signing up a new user.                      | ![update post](./screenshots/sign_up.jpg)          |
-| `login`               | login a new user.                           | ![update post](./screenshots/login.jpg)            |
-| `logout`              | loging out a user.                          | ![update post](./screenshots/logout.jpg)           |
-| `addMemberToTeam`     | adding a member to a team with ids.         | ![get all tags](./screenshots/addMemberToTeam.jpg) |
-| `add to group`        | add a user to a group.                      | ![get all posts](./screenshots/addToGroup.jpg)     |
-| `createApiKey`        | creating a api key.                         | ![get post by id](./screenshots/createApiKey.jpg)  |
-| `createTeam`          | creating a new team.                        | ![login](./screenshots/createTeam.jpg)             |
-| `DeleteApiKey`        | deleting an api key.                        | ![login](./screenshots/DeleteApiKey.jpg)           |
-| `getApiKey`           | getting a api key of the logged user.       | ![login](./screenshots/getApiKey.jpg)              |
-| `getProjects`         | getting projects of the logged user.        | ![login](./screenshots/getProjects.jpg)            |
-| `getTeam`             | getting team of the current logged user.    | ![login](./screenshots/getTeam.jpg)                |
-| `getTeams`            | getting teams of the current logged user.   | ![login](./screenshots/GetTeams.jpg)               |
-| `getUserProfile`      | getting profile of the current logged user. | ![login](./screenshots/getUserProfile.jpg)         |
-| `getusersteams`       | getting all users of a team.                | ![login](./screenshots/getusersteams.jpg)          |
-| `trackCodingActivity` | submitting coding activity.                 | ![login](./screenshots/trackCodingActivity.jpg)    |
-| `updateTeam`          | updating a team by id.                      | ![login](./screenshots/updateTeam.jpg)             |
+| Query/Mutation           | Description                                    | Screenshot                                         |
+| ------------------------ | ---------------------------------------------- | -------------------------------------------------- |
+| `signup`                 | signing up a new user.                         | ![update post](./screenshots/sign_up.jpg)          |
+| `login`                  | login a new user.                              | ![update post](./screenshots/login.jpg)            |
+| `logout`                 | loging out a user.                             | ![update post](./screenshots/logout.jpg)           |
+| `addMemberToTeam`        | adding a member to a team with ids.            | ![get all tags](./screenshots/addMemberToTeam.jpg) |
+| `add to group`           | add a user to a group.                         | ![get all posts](./screenshots/addToGroup.jpg)     |
+| `createApiKey`           | creating a api key.                            | ![get post by id](./screenshots/createApiKey.jpg)  |
+| `createTeam`             | creating a new team.                           | ![login](./screenshots/createTeam.jpg)             |
+| `DeleteApiKey`           | deleting an api key.                           | ![login](./screenshots/DeleteApiKey.jpg)           |
+| `getApiKey`              | getting a api key of the logged user.          | ![login](./screenshots/getApiKey.jpg)              |
+| `getProjects`            | getting projects of the logged user.           | ![login](./screenshots/getProjects.jpg)            |
+| `getTeam`                | getting team of the current logged user.       | ![login](./screenshots/getTeam.jpg)                |
+| `getTeams`               | getting teams of the current logged user.      | ![login](./screenshots/GetTeams.jpg)               |
+| `getUserProfile`         | getting profile of the current logged user.    | ![login](./screenshots/getUserProfile.jpg)         |
+| `getusersteams`          | getting all users of a team.                   | ![login](./screenshots/getusersteams.jpg)          |
+| `trackCodingActivity`    | submitting coding activity.                    | ![login](./screenshots/trackCodingActivity.jpg)    |
+| `updateTeam`             | updating a team by id.                         | ![login](./screenshots/updateTeam.jpg)             |
+| `deleteAccount`          | delete Account of user with token sent.        | ![login](./screenshots/deleteAccount.jpg)          |
+| `reset_password`         | reseting password of user.                     | ![login](./screenshots/reset_password.jpg)         |
+| `updateUserProfile`      | updating user profile .                        | ![login](./screenshots/updateUserProfile.jpg)      |
+| `checkApiValidity`       | checks validity and existing passed api key.   | ![login](./screenshots/checkApiValidity.jpg)       |
+| `getUserCodingAcitivity` | get user coding activity array in range.       | ![login](./screenshots/getUserCodingActivity.jpg)  |
+| `createProjects`         | create projects with its credential.           | ![login](./screenshots/createProject.jpg)          |
+| `getProjectDetail`       | getting detail of a project based on id.       | ![login](./screenshots/getProjectDetail.jpg)       |
+| `getLeaderBoard`         | getting leader board info by id.               | ![login](./screenshots/getLeaderBoard.jpg)         |
+| `createLeaderBoard`      | creating leader new board.                     | ![login](./screenshots/creaetLeaderBoard.jpg)      |
+| `updateLeaderBoard`      | updating leader board by id and provided info. | ![login](./screenshots/updateLeaderBoard.jpg)      |
+| `joinLeaderBoard`        | user joins a leader board by its id.           | ![login](./screenshots/joinLeaderBoard.jpg)        |
+| `leaveLeaderBoard`       | leaving a leader board.                        | ![login](./screenshots/leaveLeaderBoard.jpg)       |
+| `getGoal`                | getting a goal by id.                          | ![login](./screenshots/getGoal.jpg)                |
+| `getGoals`               | getting goals.                                 | ![login](./screenshots/getGoals.jpg)               |
+| `updateGoal`             | updating a goal by id and its data.            | ![login](./screenshots/updateGoal.jpg)             |
+| `deleteGoal`             | deleting a goal by its id.                     | ![login](./screenshots/deleteGoal.jpg)             |
+| `createEditor`           | create a new editor for user.                  | ![login](./screenshots/createEditor.jpg)           |
+| `updateEditor`           | updating editor with enough info and its id.   | ![login](./screenshots/updateEditor.jpg)           |
+| `getEditorData`          | get editor data by id.                         | ![login](./screenshots/getEditorData.jpg)          |
