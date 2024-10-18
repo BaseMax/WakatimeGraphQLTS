@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { IsNumber, IsString } from 'class-validator';
+import { IsEmail, IsNumber, IsString, isEmail } from 'class-validator';
 
 @ObjectType('AuthModel')
 export class AuthModel {
@@ -10,14 +10,18 @@ export class AuthModel {
   @IsString()
   @Field()
   username: string;
-
+  
   @IsString()
   @Field()
-  userAtId: string;
+  password: string;
 
   @IsString()
   @Field()
   bio: string;
+
+  @IsEmail()
+  @Field()
+  email: string;
 
   @IsString()
   @Field()
