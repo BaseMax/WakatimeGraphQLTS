@@ -1,13 +1,21 @@
-import { Query, Resolver, Args, Context } from '@nestjs/graphql';
+import { Query, Resolver } from '@nestjs/graphql';
 import { User } from './user.model';
 import { UserService } from './user.service';
-import {GqlUser} from './user.decorator';
+import { UseInterceptors } from '@nestjs/common';
+import { GqlUser } from './user.decorator';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private userService : UserService){}
+
+  constructor(private userService: UserService) { }
+
   @Query(() => User)
-  async getAPIKey(@GqlUser() user : any) {
-    return this.userService.getAPIKey(user)
+  @UseInterceptors(CacheInterceptor)
+  @CacheKey('getUserApiKey')  // unique cache key
+  @CacheTTL(120)
+  async getAPIKey(@GqlUser() user: any) {
+    return this.userService.getAPIKey(user);
   }
+
 }
