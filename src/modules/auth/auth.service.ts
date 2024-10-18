@@ -3,36 +3,42 @@ import { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { RegistrationUserInput } from './dto/register.input';
 import * as bcrypt from 'bcrypt';
-import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserInput } from './dto/login.input';
 import { ResetPasswordInput } from './dto/reset-password.input';
 import { UserService } from '../user/user.service';
-import { generateUniqueRandomString } from '../../utils/random-string.util';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private prismaService: PrismaService,
-    private jwtService: JwtService,
-    private userService: UserService,
-  ) {}
+  constructor(private prismaService: PrismaService, private jwtService: JwtService, private userService: UserService) { }
+
   async register(userRegInput: RegistrationUserInput) {
-    const userFoundWithUsername = await this.userService.findUserByUserName(
-      userRegInput.username,
-    );
+
+    const userFoundWithUsername = await this.userService.findUserByUserName(userRegInput.username);
+
     if (userFoundWithUsername) {
       throw new BadRequestException('user already exists with this username');
     }
+
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(userRegInput.password, salt);
+
     const userCreated = await this.prismaService.user.create({
-      data: { ...userRegInput, password: hashedPassword },
+      data: {
+        password: hashedPassword,
+        email:userRegInput.email,
+        bio:userRegInput.bio,
+        username:userRegInput.username,
+      }
     });
+
     const token = await this.assignToken(userCreated);
+
     delete userCreated.password;
+
     return { userCreated, token };
+
   }
 
   async login(userLoginInput: LoginUserInput) {

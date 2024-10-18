@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       }
       try {
         c.req.user = this.jwtService.verify(token);
-        return true; // Return true after successfully setting the user data
+        return true;
       } catch {
         throw new UnauthorizedException('invalid token');
       }

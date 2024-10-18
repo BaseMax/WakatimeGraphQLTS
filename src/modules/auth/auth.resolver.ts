@@ -8,7 +8,7 @@ import { HttpException } from '@nestjs/common';
 
 @Resolver(() => AuthModel)
 export class AuthResolver {
-  constructor(private service: AuthService) {}
+  constructor(private service: AuthService) { }
 
   @Mutation(() => AuthModel)
   async userRegister(

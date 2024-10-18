@@ -1,34 +1,25 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
 import { AuthResolver } from './auth.resolver';
-import { ConfigService } from '@nestjs/config';
+import { PrismaModule } from '../prisma/prisma.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
 @Module({
   providers: [AuthService, AuthResolver],
   imports: [
-      JwtModule.registerAsync({
-        useFactory: (config: ConfigService) => ({
-          global: true,
-          secret: config.getOrThrow('SECRET'),
-          signOptions: { expiresIn: '1d' },
-        }),
-        inject: [ConfigService],
-      }),
-    ConfigModule,
-    UserModule,
-  ],
-  exports: [
-    UserModule,
+    PrismaModule,
+    ConfigModule.forRoot({ isGlobal: true }),
     JwtModule.registerAsync({
-      useFactory: (config: ConfigService) => ({
-        global: true,
-        secret: config.getOrThrow('SECRET'),
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('SECRET'),
         signOptions: { expiresIn: '1d' },
       }),
       inject: [ConfigService],
     }),
+    UserModule,
   ],
+  exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }

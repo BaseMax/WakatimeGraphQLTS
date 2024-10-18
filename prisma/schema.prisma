@@ -13,7 +13,6 @@ datasource db {
 model User {
   id                Int                 @id @default(autoincrement())
   username          String              @unique
-  userAtId          String              @unique
   password          String
   bio               String
   email             String
@@ -43,7 +42,6 @@ model Language {
 model Editor {
   id   Int    @id @default(autoincrement())
   name String
-
   Project   Project? @relation(fields: [projectId], references: [id])
   projectId Int?
 }

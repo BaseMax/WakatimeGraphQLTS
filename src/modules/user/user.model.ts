@@ -11,9 +11,6 @@ export class User {
   @IsString()
   username: string;
 
-  @Field()
-  @IsString()
-  userAtId: string;
 
   @Field()
   @IsString()
