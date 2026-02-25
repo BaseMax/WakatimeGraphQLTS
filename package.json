@@ -42,7 +42,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.10",
+    "@nestjs/cli": "^11.0.16",
     "@nestjs/schematics": "^10.1.4",
     "@nestjs/testing": "^10.4.4",
     "@types/bcrypt": "^5.0.2",
